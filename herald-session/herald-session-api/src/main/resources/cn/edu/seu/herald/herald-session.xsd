@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!--
+Copyright (C) 2012 Herald, Southeast University
+The XML Schema Description of the session
+-->
+<xs:schema version="1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+    <xs:element name="session">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation source="version">1.0</xs:documentation>
+                        <xs:documentation source="description">
+                            a string specifying the identifier assigned to this session
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="creationTime" type="xs:long" use="required">
+                    <xs:annotation>
+                        <xs:documentation source="version">1.0</xs:documentation>
+                        <xs:documentation source="description">
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="lastAccessedTime" type="xs:long" use="required">
+                    <xs:annotation>
+                        <xs:documentation source="version">1.0</xs:documentation>
+                        <xs:documentation source="description">
+                            a long specifying when this session was created, expressed in milliseconds since 1/1/1970 GMT
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="properties">
+                    <xs:annotation>
+                        <xs:documentation source="version">1.0</xs:documentation>
+                        <xs:documentation source="description">
+                            the objects bound to this session
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:any minOccurs="0" maxOccurs="unbounded" processContents="skip" />
+                        </xs:sequence>>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+</xs:schema>
