@@ -17,8 +17,8 @@
 package cn.edu.seu.herald.session.core.impl;
 
 import cn.edu.seu.herald.session.Session;
-import cn.edu.seu.herald.session.SessionCacheAccess;
-import cn.edu.seu.herald.session.SessionCacheAccessException;
+import cn.edu.seu.herald.session.core.SessionCacheAccess;
+import cn.edu.seu.herald.session.exception.SessionCacheAccessException;
 
 /**
  *
