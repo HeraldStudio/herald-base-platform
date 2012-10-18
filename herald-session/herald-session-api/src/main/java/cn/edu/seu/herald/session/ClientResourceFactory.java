@@ -27,7 +27,7 @@ public class ClientResourceFactory {
     private String resourceUri;
     
     public ClientResourceFactory(String resourceUri) {
-        
+        this.resourceUri = resourceUri;
     }
     
     public ClientResource newClientResource() {

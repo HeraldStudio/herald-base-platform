@@ -14,14 +14,11 @@
  * limitations under the License.
  */
 
-package cn.edu.seu.herald.session.impl;
+package cn.edu.seu.herald.session;
 
-import cn.edu.seu.herald.session.ClientResourceFactory;
-import cn.edu.seu.herald.session.ISessionResource;
-import cn.edu.seu.herald.session.Session;
-import cn.edu.seu.herald.session.SessionCacheAccess;
-import cn.edu.seu.herald.session.SessionCacheAccessException;
+import cn.edu.seu.herald.session.exception.SessionCacheAccessException;
 import cn.edu.seu.herald.session.util.DomRepresentationParser;
+import org.restlet.data.Status;
 import org.restlet.ext.xml.DomRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.resource.ClientResource;
@@ -30,16 +27,15 @@ import org.restlet.resource.ClientResource;
  *
  * @author rAy <predator.ray@gmail.com>
  */
-public class SessionCacheAccessImpl implements SessionCacheAccess,
-        ISessionResource {
+public class SessionCacheService implements SessionResourceConstants {
     
     private ClientResourceFactory clientResourceFactory;
     
     private DomRepresentationParser parser;
     
-    public SessionCacheAccessImpl() {}
+    public SessionCacheService() {}
     
-    public SessionCacheAccessImpl(ClientResourceFactory clientResourceFactory) {
+    public SessionCacheService(ClientResourceFactory clientResourceFactory) {
         this.clientResourceFactory = clientResourceFactory;
     }
     
@@ -51,46 +47,75 @@ public class SessionCacheAccessImpl implements SessionCacheAccess,
         this.parser = parser;
     }
 
-    @Override
     public Session getSessionById(String id) throws SessionCacheAccessException {
         try {
             ClientResource clientResource = clientResourceFactory.newClientResource();
             clientResource.getReference().addQueryParameter(
-                    ISessionResource.SESSION_ID_QUERY_PARAM, id);
+                    SessionResourceConstants.SESSION_ID_QUERY_PARAM, id);
             Representation sessionRepr = clientResource.get();
-            DomRepresentation sessionDomRepr = new DomRepresentation(sessionRepr);
-            return (Session) parser.getXmlObject(sessionDomRepr, Session.class);
+            
+            Status responseStatus = clientResource.getResponse().getStatus();
+            if (Status.SUCCESS_OK.equals(responseStatus)) {
+                DomRepresentation sessionDomRepr = new DomRepresentation(sessionRepr);
+                return (Session) parser.getXmlObject(sessionDomRepr, Session.class);
+            }
+            if (Status.CLIENT_ERROR_BAD_REQUEST.equals(responseStatus)) {
+                // TODO throw client bad request exception
+            }
+            if (Status.CLIENT_ERROR_NOT_FOUND.equals(responseStatus)) {
+                return null; // TODO throw id not found, maybe expired or invalid
+            }
+            if (Status.SERVER_ERROR_INTERNAL.equals(responseStatus)) {
+                return null; // TODO throw server internal error
+            }
+            return null; // TODO throw unknown error
         } catch (Exception ex) {
             throw new SessionCacheAccessException(ex);
         }
     }
 
-    @Override
-    public void storeSession(Session session, long expireDelta) throws SessionCacheAccessException {
+    public void updateSession(Session session) throws SessionCacheAccessException {
         try {
             Representation sessionRepr = parser.getRepresentation(session);
             ClientResource clientResource = clientResourceFactory.newClientResource();
             Representation resultRepr = clientResource.post(sessionRepr);
-            // TODO if the result is failure, get the cause and throw the exception
+            
+            Status responseStatus = clientResource.getResponse().getStatus();
+            if (Status.SUCCESS_OK.equals(responseStatus)) {
+                return;
+            }
+            if (Status.SERVER_ERROR_INTERNAL.equals(responseStatus)) {
+                // TODO throw server internal error exception
+            }
+            // TODO throw unknown exception
         } catch (Exception ex) {
             throw new SessionCacheAccessException(ex);
         }
     }
 
-    @Override
     public void removeSessionById(String id) throws SessionCacheAccessException {
         try {
             ClientResource clientResource = clientResourceFactory.newClientResource();
             clientResource.getReference().addQueryParameter(
-                    ISessionResource.SESSION_ID_QUERY_PARAM, id);
+                    SessionResourceConstants.SESSION_ID_QUERY_PARAM, id);
             Representation resultRepr = clientResource.delete();
-            // TODO if the result is failure, get the cause and throw the exception
+            
+            Status responseStatus = clientResource.getResponse().getStatus();
+            if (Status.SUCCESS_OK.equals(responseStatus)) {
+                return;
+            }
+            if (Status.CLIENT_ERROR_BAD_REQUEST.equals(responseStatus)) {
+                // TODO throw client bad request exception
+            }
+            if (Status.SERVER_ERROR_INTERNAL.equals(responseStatus)) {
+                // TODO throw server internal error exception
+            }
+            // TODO throw unknown exception
         } catch (Exception ex) {
             throw new SessionCacheAccessException(ex);
         }
     }
 
-    @Override
     public void extendSessionExpireTime(Session session, long extraDelta) throws SessionCacheAccessException {
         throw new UnsupportedOperationException("Not supported yet.");
     }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.edu.seu.herald.session;
+package cn.edu.seu.herald.session.exception;
 
 /**
  *

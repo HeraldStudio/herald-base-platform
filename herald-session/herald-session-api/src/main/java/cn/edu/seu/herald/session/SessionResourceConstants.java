@@ -20,12 +20,16 @@ package cn.edu.seu.herald.session;
  *
  * @author rAy <predator.ray@gmail.com>
  */
-public interface ISessionResource {
+public interface SessionResourceConstants {
     
     String HERALD_BASE_URI = "http://herald.seu.edu.cn";
     
-    String SESSION_RESOURCE_URI = "/session";
+    String SESSION_RESOURCE_PATH = "/session";
+    
+    String SESSION_RESOURCE_URI = HERALD_BASE_URI + SESSION_RESOURCE_PATH;
     
     String SESSION_ID_QUERY_PARAM = "id";
+    
+    long SESSION_EXPIRE_TIME_IN_MILLISECOND = 60 * 30 * 1000;
 
 }
