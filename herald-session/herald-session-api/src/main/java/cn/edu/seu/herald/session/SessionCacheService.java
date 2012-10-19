@@ -56,14 +56,43 @@ public class SessionCacheService implements SessionResourceConstants {
         this.clientResourceFactory = clientResourceFactory;
     }
     
-    public void setClientResource(ClientResourceFactory clientResourceFactory) {
+    public void setClientResourceFactory(
+            ClientResourceFactory clientResourceFactory) {
         this.clientResourceFactory = clientResourceFactory;
     }
     
     public void setDomRepresentationParser(DomRepresentationParser parser) {
         this.parser = parser;
     }
+    
+    /**
+     * Retrieves a new session from the session service
+     * @return a new session
+     * @throws SessionCacheAccessException 
+     */
+    public Session getSession() throws SessionCacheAccessException {
+        try {
+            ClientResource clientResource = clientResourceFactory.newClientResource();
+            Representation sessionRepr = clientResource.get();
+            
+            Status responseStatus = clientResource.getResponse().getStatus();
+            if (Status.SUCCESS_OK.equals(responseStatus)) {
+                DomRepresentation sessionDomRepr = new DomRepresentation(sessionRepr);
+                return (Session) parser.getXmlObject(sessionDomRepr, Session.class);
+            }
+            throw getStatusException(responseStatus);
+        } catch (Exception ex) {
+            throw new SessionCacheAccessException(ex);
+        }
+    }
 
+    /**
+     * Retrieves session by its identifier from the session service
+     * @param id the identifier of the session
+     * @return the session of the identifier
+     * @throws SessionCacheAccessException when session is not found
+     * or server error occurs
+     */
     public Session getSessionById(String id) throws SessionCacheAccessException {
         try {
             ClientResource clientResource = clientResourceFactory.newClientResource();
@@ -82,6 +111,12 @@ public class SessionCacheService implements SessionResourceConstants {
         }
     }
 
+    /**
+     * Updates the session
+     * @param session the session to be updated
+     * @throws SessionCacheAccessException when session is invalid 
+     * or server error occurs
+     */
     public void updateSession(Session session) throws SessionCacheAccessException {
         try {
             Representation sessionRepr = parser.getRepresentation(session);
@@ -98,6 +133,12 @@ public class SessionCacheService implements SessionResourceConstants {
         }
     }
 
+    /**
+     * Removes the session by its identifier
+     * @param id the identifier of the session
+     * @throws SessionCacheAccessException when session is not found
+     * or server error occurs
+     */
     public void removeSessionById(String id) throws SessionCacheAccessException {
         try {
             ClientResource clientResource = clientResourceFactory.newClientResource();
