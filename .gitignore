@@ -4,3 +4,4 @@
 *.jar
 *.war
 *.ear
+/herald-session/herald-session-app/target/
