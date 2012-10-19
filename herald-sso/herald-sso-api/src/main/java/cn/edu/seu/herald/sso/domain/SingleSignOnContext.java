@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.edu.seu.herald.sso.core.domain;
+package cn.edu.seu.herald.sso.domain;
 
 import java.util.Collections;
 import java.util.Enumeration;
@@ -26,7 +26,7 @@ import java.util.Map;
  * @author rAy <predator.ray@gmail.com>
  */
 public class SingleSignOnContext {
-    
+
     private StudentUser logOnStudentUser;
     
     private Map<String, Object> contextAttributes;

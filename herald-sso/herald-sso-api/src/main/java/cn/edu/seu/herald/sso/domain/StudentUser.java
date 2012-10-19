@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.edu.seu.herald.sso.core.domain;
+package cn.edu.seu.herald.sso.domain;
 
 /**
  * Represents the user of a SEU student
@@ -25,8 +25,6 @@ public class StudentUser {
     private int cardNumber;
     
     private String studentId;
-    
-    private String password;
     
     private String fullName;
 
@@ -44,14 +42,6 @@ public class StudentUser {
 
     public void setStudentId(String studentId) {
         this.studentId = studentId;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getFullName() {
