@@ -8,7 +8,7 @@ Without this configuration present, some functionality in the IDE may be limited
 -->
     <spring-data xmlns="http://www.netbeans.org/ns/spring-data/1">
         <config-files>
-            <config-file>src/main/resources/herald-session-cache.xml</config-file>
+            <config-file>src/main/resources/cn/edu/seu/herald/session/herald-session-service.xml</config-file>
         </config-files>
         <config-file-groups/>
     </spring-data>

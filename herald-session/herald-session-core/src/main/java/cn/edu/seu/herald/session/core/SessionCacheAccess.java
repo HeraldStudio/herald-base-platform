@@ -27,7 +27,7 @@ public interface SessionCacheAccess {
      * @param expireDelta the delta time in milliseconds from stored to expired
      * @throws if an exception occurred during storing the session
      */
-    void storeSession(Session session, long expireDelta)
+    boolean storeSession(Session session, long expireDelta)
             throws SessionCacheAccessException;
     
     /**
@@ -42,7 +42,7 @@ public interface SessionCacheAccess {
      * @param extraDelta the delta time from now on
      * @throws if an exception occurred during extending the session expire time
      */
-    void extendSessionExpireTime(Session session, long extraDelta)
+    boolean updateSession(Session session, long extraDelta)
              throws SessionCacheAccessException;
 
 }

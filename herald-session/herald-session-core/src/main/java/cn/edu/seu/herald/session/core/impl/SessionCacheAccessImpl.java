@@ -19,31 +19,73 @@ package cn.edu.seu.herald.session.core.impl;
 import cn.edu.seu.herald.session.Session;
 import cn.edu.seu.herald.session.core.SessionCacheAccess;
 import cn.edu.seu.herald.session.exception.SessionCacheAccessException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import net.rubyeye.xmemcached.MemcachedClient;
 
 /**
  *
  * @author rAy <predator.ray@gmail.com>
  */
 public class SessionCacheAccessImpl implements SessionCacheAccess {
-
-    @Override
-    public Session getSessionById(String id) throws SessionCacheAccessException {
-        throw new UnsupportedOperationException("Not supported yet.");
+    
+    private static final String NAMESPACE_PREFIX = "cn.edu.seu.herald.session.";
+    
+    private static final Logger logger = Logger.getLogger(
+            SessionCacheAccessImpl.class.getName());
+    
+    private MemcachedClient memcachedClient;
+    
+    public SessionCacheAccessImpl(MemcachedClient memcachedClient) {
+        this.memcachedClient = memcachedClient;
     }
 
     @Override
-    public void storeSession(Session session, long expireDelta) throws SessionCacheAccessException {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Session getSessionById(String id) throws SessionCacheAccessException {
+        try {
+            String cacheKey = NAMESPACE_PREFIX + id;
+            return (Session) memcachedClient.get(cacheKey);
+        } catch (Exception ex) {
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
+            throw new SessionCacheAccessException(ex);
+        }
+    }
+
+    @Override
+    public boolean storeSession(Session session, long expireDelta)
+            throws SessionCacheAccessException {
+        try {
+            String cacheKey = NAMESPACE_PREFIX + session.getId();
+            int expireTimeInSeconds = (int) (expireDelta / 1000);
+            return memcachedClient.add(cacheKey, expireTimeInSeconds, session);
+        } catch (Exception ex) {
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
+            throw new SessionCacheAccessException(ex);
+        }
     }
 
     @Override
     public void removeSessionById(String id) throws SessionCacheAccessException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try {
+            String cacheKey = NAMESPACE_PREFIX + id;
+            memcachedClient.delete(cacheKey);
+        } catch (Exception ex) {
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
+            throw new SessionCacheAccessException(ex);
+        }
     }
 
     @Override
-    public void extendSessionExpireTime(Session session, long extraDelta) throws SessionCacheAccessException {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public boolean updateSession(Session session, long expireDelta)
+            throws SessionCacheAccessException {
+        try {
+            String cacheKey = NAMESPACE_PREFIX + session.getId();
+            int  expireTimeInSeconds = (int) (expireDelta / 1000);
+            return memcachedClient.replace(cacheKey, expireTimeInSeconds, session);
+        } catch (Exception ex) {
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
+            throw new SessionCacheAccessException(ex);
+        }
     }
 
 }
