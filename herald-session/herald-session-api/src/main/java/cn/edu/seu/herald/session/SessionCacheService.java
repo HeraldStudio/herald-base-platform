@@ -16,7 +16,11 @@
 
 package cn.edu.seu.herald.session;
 
+import cn.edu.seu.herald.session.exception.BadRequestException;
+import cn.edu.seu.herald.session.exception.InvalidSessionIdException;
+import cn.edu.seu.herald.session.exception.ServerInternalErrorException;
 import cn.edu.seu.herald.session.exception.SessionCacheAccessException;
+import cn.edu.seu.herald.session.exception.UnknownStatusException;
 import cn.edu.seu.herald.session.util.DomRepresentationParser;
 import org.restlet.data.Status;
 import org.restlet.ext.xml.DomRepresentation;
@@ -32,6 +36,19 @@ public class SessionCacheService implements SessionResourceConstants {
     private ClientResourceFactory clientResourceFactory;
     
     private DomRepresentationParser parser;
+    
+    private static Exception getStatusException(Status responseStatus) {
+        if (Status.CLIENT_ERROR_BAD_REQUEST.equals(responseStatus)) {
+            return new BadRequestException();
+        }
+        if (Status.CLIENT_ERROR_NOT_FOUND.equals(responseStatus)) {
+            return new InvalidSessionIdException();
+        }
+        if (Status.SERVER_ERROR_INTERNAL.equals(responseStatus)) {
+            return new ServerInternalErrorException();
+        }
+        return new UnknownStatusException();
+    }
     
     public SessionCacheService() {}
     
@@ -59,16 +76,7 @@ public class SessionCacheService implements SessionResourceConstants {
                 DomRepresentation sessionDomRepr = new DomRepresentation(sessionRepr);
                 return (Session) parser.getXmlObject(sessionDomRepr, Session.class);
             }
-            if (Status.CLIENT_ERROR_BAD_REQUEST.equals(responseStatus)) {
-                // TODO throw client bad request exception
-            }
-            if (Status.CLIENT_ERROR_NOT_FOUND.equals(responseStatus)) {
-                return null; // TODO throw id not found, maybe expired or invalid
-            }
-            if (Status.SERVER_ERROR_INTERNAL.equals(responseStatus)) {
-                return null; // TODO throw server internal error
-            }
-            return null; // TODO throw unknown error
+            throw getStatusException(responseStatus);
         } catch (Exception ex) {
             throw new SessionCacheAccessException(ex);
         }
@@ -84,10 +92,7 @@ public class SessionCacheService implements SessionResourceConstants {
             if (Status.SUCCESS_OK.equals(responseStatus)) {
                 return;
             }
-            if (Status.SERVER_ERROR_INTERNAL.equals(responseStatus)) {
-                // TODO throw server internal error exception
-            }
-            // TODO throw unknown exception
+            throw getStatusException(responseStatus);
         } catch (Exception ex) {
             throw new SessionCacheAccessException(ex);
         }
@@ -104,20 +109,10 @@ public class SessionCacheService implements SessionResourceConstants {
             if (Status.SUCCESS_OK.equals(responseStatus)) {
                 return;
             }
-            if (Status.CLIENT_ERROR_BAD_REQUEST.equals(responseStatus)) {
-                // TODO throw client bad request exception
-            }
-            if (Status.SERVER_ERROR_INTERNAL.equals(responseStatus)) {
-                // TODO throw server internal error exception
-            }
-            // TODO throw unknown exception
+            throw getStatusException(responseStatus);
         } catch (Exception ex) {
             throw new SessionCacheAccessException(ex);
         }
-    }
-
-    public void extendSessionExpireTime(Session session, long extraDelta) throws SessionCacheAccessException {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }
