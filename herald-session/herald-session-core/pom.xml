@@ -116,7 +116,6 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>3.1.2.RELEASE</version>
-            <scope>test</scope>
             <type>jar</type>
         </dependency>
         <dependency>

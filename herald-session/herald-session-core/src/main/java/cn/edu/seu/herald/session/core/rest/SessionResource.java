@@ -31,6 +31,8 @@ import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
@@ -38,6 +40,12 @@ import org.restlet.resource.ServerResource;
  */
 public class SessionResource extends ServerResource
         implements SessionResourceConstants {
+    
+    private static final String SESSION_CACHE_ACCESS_BEAN_NAME =
+            "sessionCacheAccess";
+    
+    private static final String SESSION_CONFIG_PATH =
+            "classpath:/cn/edu/seu/herald/session/herald-session-cache.xml";
     
     private static final String MISSING_PARAM_SESSIONID_MSG =
             "missing parameter: id";
@@ -50,8 +58,12 @@ public class SessionResource extends ServerResource
     
     private SessionCacheAccess sessionCacheAccess;
     
-    public void setSessionCacheAccess(SessionCacheAccess sessionCacheAccess) {
-        this.sessionCacheAccess = sessionCacheAccess;
+    public SessionResource() {
+        ApplicationContext context = new ClassPathXmlApplicationContext(
+                SESSION_CONFIG_PATH);
+        sessionCacheAccess = (SessionCacheAccess) context
+                .getBean(SESSION_CACHE_ACCESS_BEAN_NAME);
+        sessionCacheAccess = null;
     }
     
     @Get("xml")

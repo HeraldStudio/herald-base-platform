@@ -6,6 +6,7 @@
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location" value="classpath:cn/edu/seu/herald/session/herald-memcached-server.properties" />
     </bean>
+    
     <bean name="memcachedClientBuilder" class="net.rubyeye.xmemcached.XMemcachedClientBuilder">
         <constructor-arg>
             <list>
@@ -27,6 +28,11 @@
         </property>
         <property name="failureMode" value="false" />
     </bean>
+    
     <bean name="memcachedClient" factory-bean="memcachedClientBuilder"
           factory-method="build" destroy-method="shutdown" />
+    
+    <bean name="sessionCacheAccess" class="cn.edu.seu.herald.session.core.impl.SessionCacheAccessImpl">
+        <constructor-arg ref="memcachedClient" />
+    </bean>
 </beans>
