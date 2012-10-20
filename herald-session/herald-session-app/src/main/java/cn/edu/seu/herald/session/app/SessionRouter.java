@@ -16,6 +16,7 @@
 
 package cn.edu.seu.herald.session.app;
 
+import cn.edu.seu.herald.session.SessionResourceConstants;
 import cn.edu.seu.herald.session.core.rest.SessionResource;
 import org.restlet.Context;
 import org.restlet.routing.Router;
@@ -32,7 +33,8 @@ public class SessionRouter extends Router {
     }
     
     private void init() {
-        this.attach("/", SessionResource.class);
+        this.attach(SessionResourceConstants.SESSION_RESOURCE_PATH,
+                SessionResource.class);
     }
 
 }
