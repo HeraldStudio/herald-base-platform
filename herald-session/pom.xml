@@ -16,6 +16,5 @@
     <module>herald-session-core</module>
     <module>herald-session-app</module>
     <module>herald-session-jee-api</module>
-    <module>herald-session-jee-api</module>
   </modules>
 </project>
