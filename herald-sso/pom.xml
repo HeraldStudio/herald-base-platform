@@ -15,5 +15,6 @@
   <modules>
     <module>herald-sso-api</module>
     <module>herald-sso-web</module>
+    <module>herald-sso-core</module>
   </modules>
 </project>

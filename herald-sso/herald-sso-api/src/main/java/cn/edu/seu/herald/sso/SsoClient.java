@@ -18,7 +18,6 @@ package cn.edu.seu.herald.sso;
 
 import cn.edu.seu.herald.session.Session;
 import cn.edu.seu.herald.sso.domain.SingleSignOnContext;
-import cn.edu.seu.herald.sso.exception.NotAuthorizedException;
 
 /**
  *
@@ -26,8 +25,6 @@ import cn.edu.seu.herald.sso.exception.NotAuthorizedException;
  */
 public interface SsoClient {
 
-    SingleSignOnContext getSingleSignOnContext(Session currentSession);
-    
     SingleSignOnContext authenticate(String username, String password);
 
 }

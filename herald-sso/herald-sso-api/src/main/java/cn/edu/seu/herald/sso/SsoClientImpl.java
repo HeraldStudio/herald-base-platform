@@ -18,19 +18,12 @@ package cn.edu.seu.herald.sso;
 
 import cn.edu.seu.herald.session.Session;
 import cn.edu.seu.herald.sso.domain.SingleSignOnContext;
-import cn.edu.seu.herald.sso.exception.NotAuthorizedException;
 
 /**
  *
  * @author rAy <predator.ray@gmail.com>
  */
 public class SsoClientImpl implements SsoClient {
-
-    @Override
-    public SingleSignOnContext getSingleSignOnContext(Session currentSession) {
-        return (SingleSignOnContext) currentSession.getAttribute(
-                SsoServiceConstants.SSO_PROPERTY_NODE_NAME);
-    }
 
     @Override
     public SingleSignOnContext authenticate(String username, String password) {
