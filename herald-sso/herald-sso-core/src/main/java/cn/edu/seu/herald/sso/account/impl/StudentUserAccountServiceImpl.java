@@ -14,27 +14,19 @@
  * limitations under the License.
  */
 
-package cn.edu.seu.herald.sso;
+package cn.edu.seu.herald.sso.account.impl;
 
-import cn.edu.seu.herald.session.Session;
+import cn.edu.seu.herald.sso.account.StudentUserAccountService;
 import cn.edu.seu.herald.sso.domain.SingleSignOnContext;
 
 /**
  *
  * @author rAy <predator.ray@gmail.com>
  */
-public class SsoClientImpl implements SsoClient {
+public class StudentUserAccountServiceImpl
+        implements StudentUserAccountService {
 
-    @Override
-    public SingleSignOnContext authenticate(String username, String password) {
-        // GET /authentication?username={username}&password={password}
-        // response will be like:
-        //    HTTP/1.1 200 OK
-        //    <singleSignOnContext>
-        //       <studentUser>...</studentUser>
-        //    </singleSignOnContext>
-        // or:
-        //    HTTP/1.1 401 Not Authorzied
+    public SingleSignOnContext authenticate(String cardNumber, String password) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

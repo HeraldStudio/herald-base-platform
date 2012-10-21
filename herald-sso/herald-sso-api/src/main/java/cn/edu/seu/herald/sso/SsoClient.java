@@ -16,15 +16,28 @@
 
 package cn.edu.seu.herald.sso;
 
-import cn.edu.seu.herald.session.Session;
 import cn.edu.seu.herald.sso.domain.SingleSignOnContext;
 
 /**
  *
  * @author rAy <predator.ray@gmail.com>
  */
-public interface SsoClient {
+public class SsoClient {
 
-    SingleSignOnContext authenticate(String username, String password);
+    public SsoClient() {
+        
+    }
 
+    public SingleSignOnContext authenticate(String username, String password) {
+        // GET /authentication?username={username}&password={password}
+        // response will be like:
+        //    HTTP/1.1 200 OK
+        //    <singleSignOnContext>
+        //       <studentUser>...</studentUser>
+        //    </singleSignOnContext>
+        // or:
+        //    HTTP/1.1 401 Not Authorzied
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+ 
 }
