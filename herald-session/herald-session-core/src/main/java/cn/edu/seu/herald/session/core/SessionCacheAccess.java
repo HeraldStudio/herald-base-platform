@@ -4,7 +4,7 @@
 package cn.edu.seu.herald.session.core;
 
 import cn.edu.seu.herald.session.Session;
-import cn.edu.seu.herald.session.exception.SessionCacheAccessException;
+import cn.edu.seu.herald.session.exception.SessionAccessException;
 
 /**
  * Provides the access to the session cache
@@ -18,7 +18,7 @@ public interface SessionCacheAccess {
      * @return the session if exists, or null
      * @throws if an exception occurred during retrieving the session
      */
-    Session getSessionById(String id) throws SessionCacheAccessException;
+    Session getSessionById(String id) throws SessionAccessException;
     
     /**
      * Stores the new session in the cache and expires where the time comes,
@@ -28,14 +28,14 @@ public interface SessionCacheAccess {
      * @throws if an exception occurred during storing the session
      */
     boolean storeSession(Session session, long expireDelta)
-            throws SessionCacheAccessException;
+            throws SessionAccessException;
     
     /**
      * Removes the session from the cache by its id if exists
      * @param id the id of the session to be removed
      * @throws if an exception occurred during removing the session
      */
-    void removeSessionById(String id) throws SessionCacheAccessException;
+    void removeSessionById(String id) throws SessionAccessException;
     
     /**
      * Extends the expire time of a session
@@ -43,6 +43,6 @@ public interface SessionCacheAccess {
      * @throws if an exception occurred during extending the session expire time
      */
     boolean updateSession(Session session, long extraDelta)
-             throws SessionCacheAccessException;
+             throws SessionAccessException;
 
 }

@@ -20,7 +20,7 @@ package cn.edu.seu.herald.session.exception;
  *
  * @author rAy <predator.ray@gmail.com>
  */
-public class InvalidSessionIdException extends SessionCacheAccessException {
+public class InvalidSessionIdException extends SessionAccessException {
     
     private static final String DEFAULT_MSG =
             "invalid session id, session may have expired";

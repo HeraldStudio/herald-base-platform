@@ -22,7 +22,7 @@ import org.restlet.data.Status;
  *
  * @author rAy <predator.ray@gmail.com>
  */
-public class UnknownStatusException extends SessionCacheAccessException {
+public class UnknownStatusException extends SessionAccessException {
     
     public UnknownStatusException() {
         super("unknown status");

@@ -20,7 +20,7 @@ package cn.edu.seu.herald.session.exception;
  *
  * @author rAy <predator.ray@gmail.com>
  */
-public class BadRequestException extends SessionCacheAccessException {
+public class BadRequestException extends SessionAccessException {
     
     private static final String DEFAULT_MSG =
             "bad request exception occurred, check the request syntax";

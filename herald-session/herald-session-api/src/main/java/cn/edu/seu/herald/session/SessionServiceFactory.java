@@ -22,30 +22,30 @@ import cn.edu.seu.herald.session.util.DomRepresentationParser;
  *
  * @author rAy <predator.ray@gmail.com>
  */
-public class SessionCacheServiceFactory {
+public class SessionServiceFactory {
     
-    private static SessionCacheServiceFactory factoryInstance;
+    private static SessionServiceFactory factoryInstance;
     
     private ClientResourceFactory clientResourceFactory;
     
     private DomRepresentationParser parse;
     
-    public static SessionCacheServiceFactory getInstance() {
+    public static SessionServiceFactory getInstance() {
         if (factoryInstance == null) {
-            factoryInstance = new SessionCacheServiceFactory();
+            factoryInstance = new SessionServiceFactory();
         }
         return factoryInstance;
     }
     
-    protected SessionCacheServiceFactory() {
+    protected SessionServiceFactory() {
         clientResourceFactory = new ClientResourceFactory(
                 SessionResourceConstants.SESSION_RESOURCE_URI);
         parse = new DomRepresentationParser();
     }
     
-    public SessionCacheService getSessionCacheService() {
-        SessionCacheService sessionCacheService =
-                new SessionCacheService(clientResourceFactory);
+    public SessionService getSessionService() {
+        SessionService sessionCacheService =
+                new SessionService(clientResourceFactory);
         sessionCacheService.setDomRepresentationParser(parse);
         return sessionCacheService;
     }

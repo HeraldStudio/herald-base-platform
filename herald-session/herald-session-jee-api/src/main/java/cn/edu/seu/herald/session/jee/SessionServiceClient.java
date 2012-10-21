@@ -17,8 +17,8 @@
 package cn.edu.seu.herald.session.jee;
 
 import cn.edu.seu.herald.session.Session;
-import cn.edu.seu.herald.session.SessionCacheService;
-import cn.edu.seu.herald.session.exception.SessionCacheAccessException;
+import cn.edu.seu.herald.session.SessionService;
+import cn.edu.seu.herald.session.exception.SessionAccessException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,9 +29,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class SessionServiceClient {
     
-    private SessionCacheService sessionCacheService;
+    private SessionService sessionCacheService;
     
-    public SessionServiceClient(SessionCacheService sessionCacheService) {
+    public SessionServiceClient(SessionService sessionCacheService) {
         this.sessionCacheService = sessionCacheService;
     }
     
@@ -46,7 +46,7 @@ public class SessionServiceClient {
     }
     
     public Session getSession(HttpServletRequest request,
-            HttpServletResponse response) throws SessionCacheAccessException {
+            HttpServletResponse response) throws SessionAccessException {
         Cookie[] cookies = request.getCookies();
         String sessionId = getSessionId(cookies);
         boolean found = (sessionId != null);

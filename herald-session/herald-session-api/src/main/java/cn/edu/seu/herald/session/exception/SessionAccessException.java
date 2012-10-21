@@ -20,21 +20,21 @@ package cn.edu.seu.herald.session.exception;
  *
  * @author rAy <predator.ray@gmail.com>
  */
-public class SessionCacheAccessException extends Exception {
+public class SessionAccessException extends Exception {
     
-    public SessionCacheAccessException() {
+    public SessionAccessException() {
         super();
     }
     
-    public SessionCacheAccessException(Throwable cause) {
+    public SessionAccessException(Throwable cause) {
         super(cause);
     }
     
-    public SessionCacheAccessException(String msg) {
+    public SessionAccessException(String msg) {
         super(msg);
     }
     
-    public SessionCacheAccessException(String msg, Throwable cause) {
+    public SessionAccessException(String msg, Throwable cause) {
         super(msg, cause);
     }
 
