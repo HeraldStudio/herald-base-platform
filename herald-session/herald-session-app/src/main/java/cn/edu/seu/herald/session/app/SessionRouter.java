@@ -18,6 +18,8 @@ package cn.edu.seu.herald.session.app;
 
 import cn.edu.seu.herald.session.SessionResourceConstants;
 import cn.edu.seu.herald.session.core.rest.SessionResource;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.restlet.Context;
 import org.restlet.routing.Router;
 
@@ -27,12 +29,19 @@ import org.restlet.routing.Router;
  */
 public class SessionRouter extends Router {
     
+    private static final Logger logger = Logger.getLogger(
+            SessionRouter.class.getName());
+    
     public SessionRouter(Context appContext) {
         super(appContext);
+        logger.log(Level.INFO, "initializing the session router");
         init();
     }
     
     private void init() {
+        logger.log(Level.INFO,
+                "attach SessionResource to to path: " +
+                SessionResourceConstants.SESSION_RESOURCE_PATH);
         this.attach(SessionResourceConstants.SESSION_RESOURCE_PATH,
                 SessionResource.class);
     }

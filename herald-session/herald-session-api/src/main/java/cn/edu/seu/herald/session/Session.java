@@ -16,6 +16,7 @@
 
 package cn.edu.seu.herald.session;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
@@ -36,7 +37,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "session")
-public class Session {
+public class Session implements Serializable {
     
     @XmlElement
     private String id;

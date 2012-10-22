@@ -7,10 +7,6 @@ import javax.xml.bind.Marshaller;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import net.rubyeye.xmemcached.MemcachedClient;
-import net.rubyeye.xmemcached.MemcachedClientBuilder;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * Unit test for simple App.
@@ -50,14 +46,6 @@ public class AppTest extends TestCase {
             ex.printStackTrace();
             TestCase.fail();
         }
-    }
-    
-    public void testMemcached() {
-        ApplicationContext context =
-                new ClassPathXmlApplicationContext(
-                "classpath:/cn/edu/seu/herald/session/herald-session-cache.xml");
-        MemcachedClient memcachedClient =
-                (MemcachedClient) context.getBean("memcachedClient");
     }
     
     private static class Foobar {

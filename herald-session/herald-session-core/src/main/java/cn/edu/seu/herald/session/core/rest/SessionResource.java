@@ -63,7 +63,6 @@ public class SessionResource extends ServerResource
                 SESSION_CONFIG_PATH);
         sessionCacheAccess = (SessionCacheAccess) context
                 .getBean(SESSION_CACHE_ACCESS_BEAN_NAME);
-        sessionCacheAccess = null;
     }
     
     @Get("xml")
@@ -79,8 +78,7 @@ public class SessionResource extends ServerResource
                 String newSessionId = uuid.toString();
 
                 Session newSession = new Session(newSessionId, currentTime);
-                sessionCacheAccess.storeSession(newSession,
-                        SessionResourceConstants.SESSION_EXPIRE_TIME_IN_MILLISECOND);
+                sessionCacheAccess.storeSession(newSession);
 
                 DomRepresentationParser parser = new DomRepresentationParser();
                 return parser.getRepresentation(newSession);
@@ -109,8 +107,7 @@ public class SessionResource extends ServerResource
             DomRepresentationParser parser = new DomRepresentationParser();
             Session newSession =
                     (Session) parser.getXmlObject(sessionDomRepr, Session.class);
-            sessionCacheAccess.storeSession(newSession,
-                    SessionResourceConstants.SESSION_EXPIRE_TIME_IN_MILLISECOND);
+            sessionCacheAccess.storeSession(newSession);
             return SessionResourceUtils.getSuccessRepresentation();
         } catch (Exception ex) {
             logger.log(Level.SEVERE, ex.getMessage(), ex);

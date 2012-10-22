@@ -24,11 +24,9 @@ public interface SessionCacheAccess {
      * Stores the new session in the cache and expires where the time comes,
      * or updates the session if already exists
      * @param session the session object to be stored
-     * @param expireDelta the delta time in milliseconds from stored to expired
      * @throws if an exception occurred during storing the session
      */
-    boolean storeSession(Session session, long expireDelta)
-            throws SessionAccessException;
+    void storeSession(Session session) throws SessionAccessException;
     
     /**
      * Removes the session from the cache by its id if exists
@@ -38,11 +36,10 @@ public interface SessionCacheAccess {
     void removeSessionById(String id) throws SessionAccessException;
     
     /**
-     * Extends the expire time of a session
-     * @param extraDelta the delta time from now on
+     * Updates the session
+     * @param session the session to be updated
      * @throws if an exception occurred during extending the session expire time
      */
-    boolean updateSession(Session session, long extraDelta)
-             throws SessionAccessException;
+    void updateSession(Session session) throws SessionAccessException;
 
 }

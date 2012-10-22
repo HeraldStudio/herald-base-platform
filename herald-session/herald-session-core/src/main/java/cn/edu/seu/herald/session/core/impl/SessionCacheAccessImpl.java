@@ -21,7 +21,8 @@ import cn.edu.seu.herald.session.core.SessionCacheAccess;
 import cn.edu.seu.herald.session.exception.SessionAccessException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import net.rubyeye.xmemcached.MemcachedClient;
+import org.apache.jcs.JCS;
+import org.apache.jcs.access.exception.CacheException;
 
 /**
  *
@@ -34,31 +35,22 @@ public class SessionCacheAccessImpl implements SessionCacheAccess {
     private static final Logger logger = Logger.getLogger(
             SessionCacheAccessImpl.class.getName());
     
-    private MemcachedClient memcachedClient;
+    private JCS jcsClient;
     
-    public SessionCacheAccessImpl(MemcachedClient memcachedClient) {
-        this.memcachedClient = memcachedClient;
+    public SessionCacheAccessImpl(JCS jcsClient) {
+        this.jcsClient = jcsClient;
     }
 
     @Override
     public Session getSessionById(String id) throws SessionAccessException {
-        try {
-            String cacheKey = NAMESPACE_PREFIX + id;
-            return (Session) memcachedClient.get(cacheKey);
-        } catch (Exception ex) {
-            logger.log(Level.SEVERE, ex.getMessage(), ex);
-            throw new SessionAccessException(ex);
-        }
+        return (Session) jcsClient.get(id);
     }
 
     @Override
-    public boolean storeSession(Session session, long expireDelta)
-            throws SessionAccessException {
+    public void storeSession(Session session) throws SessionAccessException {
         try {
-            String cacheKey = NAMESPACE_PREFIX + session.getId();
-            int expireTimeInSeconds = (int) (expireDelta / 1000);
-            return memcachedClient.add(cacheKey, expireTimeInSeconds, session);
-        } catch (Exception ex) {
+            jcsClient.put(session.getId(), session);
+        } catch (CacheException ex) {
             logger.log(Level.SEVERE, ex.getMessage(), ex);
             throw new SessionAccessException(ex);
         }
@@ -67,25 +59,16 @@ public class SessionCacheAccessImpl implements SessionCacheAccess {
     @Override
     public void removeSessionById(String id) throws SessionAccessException {
         try {
-            String cacheKey = NAMESPACE_PREFIX + id;
-            memcachedClient.delete(cacheKey);
-        } catch (Exception ex) {
+            jcsClient.remove(id);
+        } catch (CacheException ex) {
             logger.log(Level.SEVERE, ex.getMessage(), ex);
             throw new SessionAccessException(ex);
         }
     }
 
     @Override
-    public boolean updateSession(Session session, long expireDelta)
+    public void updateSession(Session session)
             throws SessionAccessException {
-        try {
-            String cacheKey = NAMESPACE_PREFIX + session.getId();
-            int  expireTimeInSeconds = (int) (expireDelta / 1000);
-            return memcachedClient.replace(cacheKey, expireTimeInSeconds, session);
-        } catch (Exception ex) {
-            logger.log(Level.SEVERE, ex.getMessage(), ex);
-            throw new SessionAccessException(ex);
-        }
     }
 
 }

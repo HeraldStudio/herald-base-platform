@@ -24,12 +24,12 @@ public interface SessionResourceConstants {
 
     String SERVICE_BASE_URI = "http://127.0.0.1/session";
 
-    String SESSION_RESOURCE_PATH = "/";
+    String SESSION_RESOURCE_PATH = "";
 
     String SESSION_RESOURCE_URI = SERVICE_BASE_URI + SESSION_RESOURCE_PATH;
 
     String SESSION_ID_QUERY_PARAM = "id";
 
-    long SESSION_EXPIRE_TIME_IN_MILLISECOND = 60 * 30 * 1000;
+    long SESSION_EXPIRE_TIME_IN_SECONDs = 60 * 30;
 
 }
