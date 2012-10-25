@@ -58,11 +58,14 @@ public class SessionResource extends ServerResource
     
     private SessionCacheAccess sessionCacheAccess;
     
+    private SessionFactory sessionFactory;
+    
     public SessionResource() {
         ApplicationContext context = new ClassPathXmlApplicationContext(
                 SESSION_CONFIG_PATH);
         sessionCacheAccess = (SessionCacheAccess) context
                 .getBean(SESSION_CACHE_ACCESS_BEAN_NAME);
+        sessionFactory = SessionFactory.getInstance();
     }
     
     @Get("xml")
@@ -72,11 +75,7 @@ public class SessionResource extends ServerResource
             
             if (sessionIdParam == null) {
                 // create a new session
-                long currentTime = System.currentTimeMillis();
-                UUID uuid  =  UUID.randomUUID();
-                String newSessionId = uuid.toString();
-
-                Session newSession = new Session(newSessionId, currentTime);
+                Session newSession = sessionFactory.newSession();
                 sessionCacheAccess.storeSession(newSession);
 
                 DomRepresentationParser parser = new DomRepresentationParser();
