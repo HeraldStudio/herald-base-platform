@@ -13,31 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package cn.edu.seu.herald.sso;
 
+import cn.edu.seu.herald.session.Session;
 import cn.edu.seu.herald.sso.domain.SingleSignOnContext;
+import cn.edu.seu.herald.sso.exception.SingleSignOnServiceException;
 
 /**
  *
  * @author rAy <predator.ray@gmail.com>
  */
-public class SsoClient {
+public interface SsoClient {
 
-    public SsoClient() {
-        
-    }
+    SingleSignOnContext authenticate(String username, String password)
+            throws SingleSignOnServiceException;
+    
+    void shareSignOnContext(Session currentSession,
+            SingleSignOnContext singleSignOnContext)
+            throws SingleSignOnServiceException;
 
-    public SingleSignOnContext authenticate(String username, String password) {
-        // GET /authentication?username={username}&password={password}
-        // response will be like:
-        //    HTTP/1.1 200 OK
-        //    <singleSignOnContext>
-        //       <studentUser>...</studentUser>
-        //    </singleSignOnContext>
-        // or:
-        //    HTTP/1.1 401 Not Authorzied
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
- 
 }

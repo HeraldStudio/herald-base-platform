@@ -22,6 +22,16 @@ package cn.edu.seu.herald.sso;
  */
 public interface SsoServiceConstants {
 
-    String SSO_PROPERTY_NODE_NAME = "herald.sso";
+    String SSO_NODE_PREFIX = "herald.sso.";
+
+    String SSO_STUDENT_USER_PREFIX = "studentUser.";
+
+    String SSO_CONTEXT_PROPERTIES_PREFIX = "property.";
+
+    String CARD_NUMBER_NODE_NAME = "cardNumber";
+
+    String STUDENT_ID_NODE_NAME = "studentId";
+
+    String STUDENT_FULL_NAME_NODE_NAME = "fullName";
 
 }
