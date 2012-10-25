@@ -36,6 +36,9 @@ public class SessionServiceClient {
     }
     
     private static String getSessionId(Cookie[] cookies) {
+        if (cookies == null) {
+            return null;
+        }
         for (Cookie c: cookies) {
             String cookieName = c.getName();
             if (SessionJeeConstants.SESSION_COOKIE_NAME.equals(cookieName)) {
