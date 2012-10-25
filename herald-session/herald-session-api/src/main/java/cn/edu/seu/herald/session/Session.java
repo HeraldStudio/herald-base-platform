@@ -49,6 +49,9 @@ public class Session implements Serializable {
     private long lastAccessedTime;
     
     @XmlElement
+    private String uri;
+    
+    @XmlElement
     @XmlJavaTypeAdapter(MapAdapter.class)
     private Map<String, Object> properties;
     
@@ -144,6 +147,18 @@ public class Session implements Serializable {
      */
     public void setAttribute(String name, Object value) {
         properties.put(name, value);
+    }
+
+    /**
+     * Returns the URI to this session
+     * @return the URI to this session
+     */
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 
 }
