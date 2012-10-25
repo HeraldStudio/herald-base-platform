@@ -45,13 +45,13 @@ public class SessionResource extends ServerResource
             "sessionCacheAccess";
     
     private static final String SESSION_CONFIG_PATH =
-            "classpath:/cn/edu/seu/herald/session/herald-session-cache.xml";
+            "classpath*:/cn/edu/seu/herald/session/herald-session-cache.xml";
     
     private static final String MISSING_PARAM_SESSIONID_MSG =
             "missing parameter: id";
     
     private static final String INVALID_OR_EXPIRED_SESSION_ID =
-            "invalid or expired session id: ";
+            "invalid or expired session id";
     
     private static final Logger logger = Logger.getLogger(
             SessionResource.class.getName());
@@ -69,9 +69,8 @@ public class SessionResource extends ServerResource
     public Representation getSession() {
         try {
             Parameter sessionIdParam = getQuery().getFirst(SESSION_ID_QUERY_PARAM);
-            String sessionId = sessionIdParam.getValue();
             
-            if (sessionId == null) {
+            if (sessionIdParam == null) {
                 // create a new session
                 long currentTime = System.currentTimeMillis();
                 UUID uuid  =  UUID.randomUUID();
@@ -84,6 +83,7 @@ public class SessionResource extends ServerResource
                 return parser.getRepresentation(newSession);
             }
             
+            String sessionId = sessionIdParam.getValue();
             Session cachedSession = sessionCacheAccess.getSessionById(sessionId);
             if (cachedSession == null) {
                 getResponse().setStatus(Status.CLIENT_ERROR_NOT_FOUND);

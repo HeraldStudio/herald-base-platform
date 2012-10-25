@@ -1,12 +1,20 @@
 package cn.edu.seu.herald.session.core;
 
 import cn.edu.seu.herald.session.Session;
+import cn.edu.seu.herald.session.core.impl.SessionCacheAccessImpl;
+import cn.edu.seu.herald.session.exception.SessionAccessException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.apache.jcs.JCS;
+import org.apache.jcs.access.exception.CacheException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * Unit test for simple App.
@@ -43,6 +51,40 @@ public class AppTest extends TestCase {
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             marshaller.marshal(session, System.out);
         } catch (JAXBException ex) {
+            ex.printStackTrace();
+            TestCase.fail();
+        }
+    }
+    
+    public void testCache() {
+        try {
+            ApplicationContext context = new ClassPathXmlApplicationContext(
+                    "classpath*:/cn/edu/seu/herald/session/herald-session-cache.xml");
+            boolean isTypeMatch = context.isTypeMatch("sessionCacheAccess",
+                    SessionCacheAccess.class);
+            TestCase.assertTrue(isTypeMatch);
+            SessionCacheAccess sessionCacheAccess = (SessionCacheAccess) context
+                    .getBean("sessionCacheAccess");
+            
+            // store
+            String uuid = "550e8400-e29b-41d4-a716-446655440000";
+            long currentTime = System.currentTimeMillis();
+            Session newSession = new Session(uuid, currentTime);
+            newSession.setAttribute("foo", "bar");
+            sessionCacheAccess.storeSession(newSession);
+            
+            // retrieve
+            Session cachedSession = sessionCacheAccess.getSessionById(uuid);
+            TestCase.assertEquals(cachedSession.getId(), uuid);
+            TestCase.assertEquals(cachedSession.getCreationTime(), currentTime);
+            TestCase.assertEquals(cachedSession.getAttribute("foo"), "bar");
+            
+            // update
+            cachedSession.setAttribute("foo", "another");
+            sessionCacheAccess.updateSession(cachedSession);
+            Session updatedSession = sessionCacheAccess.getSessionById(uuid);
+            TestCase.assertEquals(updatedSession.getAttribute("foo"), "another");
+        } catch (Exception ex) {
             ex.printStackTrace();
             TestCase.fail();
         }
