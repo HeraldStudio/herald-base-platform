@@ -24,14 +24,17 @@ public interface SsoServiceConstants {
 
     String SSO_NODE_PREFIX = "herald.sso.";
 
-    String SSO_STUDENT_USER_PREFIX = "studentUser.";
+    String SSO_STUDENT_USER_PREFIX = SSO_NODE_PREFIX + "studentUser.";
 
-    String SSO_CONTEXT_PROPERTIES_PREFIX = "property.";
+    String SSO_CONTEXT_PROPERTIES_PREFIX = SSO_NODE_PREFIX + "property.";
 
-    String CARD_NUMBER_NODE_NAME = "cardNumber";
+    String CARD_NUMBER_NODE_NAME = SSO_NODE_PREFIX + SSO_STUDENT_USER_PREFIX +
+            "cardNumber";
 
-    String STUDENT_ID_NODE_NAME = "studentId";
+    String STUDENT_ID_NODE_NAME = SSO_NODE_PREFIX + SSO_STUDENT_USER_PREFIX +
+            "studentId";
 
-    String STUDENT_FULL_NAME_NODE_NAME = "fullName";
+    String STUDENT_FULL_NAME_NODE_NAME = SSO_NODE_PREFIX +
+            SSO_STUDENT_USER_PREFIX + "fullName";
 
 }
