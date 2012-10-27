@@ -13,12 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.edu.seu.herald.sso;
+package cn.edu.seu.herald.sso.web;
 
+import cn.edu.seu.herald.session.Session;
+import cn.edu.seu.herald.session.SessionService;
+import cn.edu.seu.herald.session.SessionServiceFactory;
+import cn.edu.seu.herald.session.exception.SessionAccessException;
+import cn.edu.seu.herald.session.jee.SessionServiceClient;
+import cn.edu.seu.herald.sso.SsoServiceConstants;
 import cn.edu.seu.herald.sso.account.StudentUserAccountService;
 import cn.edu.seu.herald.sso.domain.SingleSignOnContext;
+import cn.edu.seu.herald.sso.domain.StudentUser;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Enumeration;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -36,16 +44,20 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class AuthenticationEntrance extends HttpServlet {
 
     private static final String USERNAME_PARAM = "username";
-    
+
     private static final String PASSWORD_PARAM = "password";
-    
+
+    private static final String SUCCESS_REDIRECT_URL_PARAM = "success";
+
+    private static final String FAILURE_REDIRECT_URL_PARAM = "failure";
+
     private static final String CONTEXT_CONFIG_PARAM_NAME = "context-config";
-    
+
     private static final String STUDENT_USER_ACCOUNT_SERVICE_BEAN_NAME =
             "studentUserAccountService";
-    
+
     private StudentUserAccountService sUserAccountService;
-    
+
     @Override
     public void init(ServletConfig config) {
         String contextConfig = config.getInitParameter(CONTEXT_CONFIG_PARAM_NAME);
@@ -85,15 +97,36 @@ public class AuthenticationEntrance extends HttpServlet {
         response.setContentType("text/xml");
         String username = request.getParameter(USERNAME_PARAM);
         String password = request.getParameter(PASSWORD_PARAM);
+        String successRedirectUrl = request.getParameter(
+                SUCCESS_REDIRECT_URL_PARAM);
+        String failureRedirectUrl = request.getParameter(
+                FAILURE_REDIRECT_URL_PARAM);
+
         SingleSignOnContext ssoContext =
                 sUserAccountService.authenticate(username, password);
         boolean authenticated = (ssoContext != null);
-        
-        if (!authenticated) {
+
+        if (!authenticated && failureRedirectUrl == null) {
             response.sendError(401);
             return;
         }
-        
+
+        if (!authenticated && failureRedirectUrl != null) {
+            response.sendRedirect(failureRedirectUrl);
+            return;
+        }
+
+        if (authenticated && successRedirectUrl != null) {
+            try {
+                shareInSession(ssoContext, request, response);
+                response.sendRedirect(successRedirectUrl);
+                return;
+            } catch (SessionAccessException ex) {
+                response.sendError(500, ex.getMessage());
+                return;
+            }
+        }
+
         PrintWriter out  = response.getWriter();
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(
@@ -106,6 +139,43 @@ public class AuthenticationEntrance extends HttpServlet {
         } finally {
             out.close();
         }
+    }
+
+    private void shareInSession(SingleSignOnContext singleSignOnContext,
+            HttpServletRequest request, HttpServletResponse response)
+            throws SessionAccessException {
+        SessionServiceFactory sessionFactory =
+                SessionServiceFactory.getInstance();
+        SessionService sessionService = sessionFactory.getSessionService();
+        SessionServiceClient sessionServiceClient =
+                new SessionServiceClient(sessionService);
+        Session currentSession = sessionServiceClient.getSession(request, response);
+        // get all information of the single sign-on context
+        StudentUser studentUser = singleSignOnContext.getLogOnStudentUser();
+        int cardNumber = studentUser.getCardNumber();
+        String studentId = studentUser.getStudentId();
+        String fullName = studentUser.getFullName();
+        Enumeration<String> attributeNames = singleSignOnContext.getAttributeNames();
+
+        // write then into the session
+        // write the properties of the student user
+        currentSession.setAttribute(SsoServiceConstants.CARD_NUMBER_NODE_NAME,
+                cardNumber);
+        currentSession.setAttribute(SsoServiceConstants.STUDENT_ID_NODE_NAME,
+                studentId);
+        currentSession.setAttribute(SsoServiceConstants.STUDENT_FULL_NAME_NODE_NAME,
+                fullName);
+        // write the attributes of the context
+        while (attributeNames.hasMoreElements()) {
+            String attriName = attributeNames.nextElement();
+            Object attriValue = singleSignOnContext.getAttribute(attriName);
+            currentSession.setAttribute(
+                    SsoServiceConstants.SSO_CONTEXT_PROPERTIES_PREFIX + attriName,
+                    attriValue);
+        }
+
+        // update the session
+        sessionService.updateSession(currentSession);
     }
 
 }

@@ -2,7 +2,7 @@
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
     <filter>
         <filter-name>characterEncodingFilter</filter-name>
-        <filter-class>cn.edu.seu.herald.sso.CharacterEncodingFilter</filter-class>
+        <filter-class>cn.edu.seu.herald.sso.web.CharacterEncodingFilter</filter-class>
         <init-param>
             <param-name>encoding</param-name>
             <param-value>UTF-8</param-value>
@@ -14,7 +14,7 @@
     </filter-mapping>
     <servlet>
         <servlet-name>authenticationEntrance</servlet-name>
-        <servlet-class>cn.edu.seu.herald.sso.AuthenticationEntrance</servlet-class>
+        <servlet-class>cn.edu.seu.herald.sso.web.AuthenticationEntrance</servlet-class>
         <init-param>
             <param-name>context-config</param-name>
             <param-value>herald-sso-service.xml</param-value>
