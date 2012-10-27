@@ -66,7 +66,7 @@ public class ConcreteSsoContext implements SingleSignOnContext {
                 String ssoPropertyName = name.substring(
                         SsoServiceConstants.SSO_CONTEXT_PROPERTIES_PREFIX
                         .length());
-                stack.add(name);
+                stack.add(ssoPropertyName);
             }
         }
         return stack.elements();
