@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.edu.seu.herald.sso.account;
+package cn.edu.seu.herald.sso.core;
 
+import cn.edu.seu.herald.session.Session;
+import cn.edu.seu.herald.session.exception.SessionAccessException;
 import cn.edu.seu.herald.sso.domain.SingleSignOnContext;
 
 /**
