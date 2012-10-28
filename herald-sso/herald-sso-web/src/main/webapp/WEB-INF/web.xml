@@ -15,10 +15,6 @@
     <servlet>
         <servlet-name>authenticationDispatcher</servlet-name>
         <servlet-class>cn.edu.seu.herald.sso.web.controller.AuthenticationDispatcher</servlet-class>
-        <init-param>
-            <param-name>context-config</param-name>
-            <param-value>herald-sso-service.xml</param-value>
-        </init-param>
     </servlet>
     <servlet-mapping>
         <servlet-name>authenticationDispatcher</servlet-name>

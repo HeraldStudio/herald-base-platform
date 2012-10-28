@@ -21,14 +21,13 @@ import cn.edu.seu.herald.session.SessionService;
 import cn.edu.seu.herald.session.SessionServiceFactory;
 import cn.edu.seu.herald.session.exception.SessionAccessException;
 import cn.edu.seu.herald.session.jee.SessionServiceClient;
-import cn.edu.seu.herald.sso.SsoServiceConstants;
 import cn.edu.seu.herald.sso.core.SingleSignOnSessionService;
 import cn.edu.seu.herald.sso.core.StudentUserAccountService;
 import cn.edu.seu.herald.sso.domain.SingleSignOnContext;
-import cn.edu.seu.herald.sso.domain.StudentUser;
 import java.io.IOException;
-import java.util.Enumeration;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,6 +41,9 @@ public class WebFormAuthenticationView implements AuthenticationView {
     public static final String SUCCESS_REDIRECT_URL_PARAM = "success";
 
     public static final String FAILURE_REDIRECT_URL_PARAM = "failure";
+
+    private static final Logger logger = Logger.getLogger(
+            WebFormAuthenticationView.class.getName());
 
     private StudentUserAccountService studentUserAccountService;
 
@@ -77,6 +79,7 @@ public class WebFormAuthenticationView implements AuthenticationView {
             shareSsoContextInSession(request, response, ssoContext);
             response.sendRedirect(successRedirectUrl);
         } catch (SessionAccessException ex) {
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
             response.sendRedirect(failureRedirectUrl);
         }
     }

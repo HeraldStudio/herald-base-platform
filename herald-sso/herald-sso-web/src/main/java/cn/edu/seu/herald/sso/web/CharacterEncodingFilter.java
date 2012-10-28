@@ -50,6 +50,7 @@ public class CharacterEncodingFilter implements Filter {
             request.setCharacterEncoding(encoding);
             response.setCharacterEncoding(encoding);
         }
+        chain.doFilter(request, response);
     }
 
     /**

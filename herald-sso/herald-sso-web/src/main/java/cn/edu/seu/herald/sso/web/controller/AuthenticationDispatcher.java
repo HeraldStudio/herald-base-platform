@@ -16,8 +16,12 @@
 
 package cn.edu.seu.herald.sso.web.controller;
 
+import cn.edu.seu.herald.session.SessionService;
+import cn.edu.seu.herald.session.SessionServiceFactory;
 import cn.edu.seu.herald.sso.core.SingleSignOnSessionService;
 import cn.edu.seu.herald.sso.core.StudentUserAccountService;
+import cn.edu.seu.herald.sso.core.impl.SingleSignOnSessionServiceImpl;
+import cn.edu.seu.herald.sso.core.impl.StudentUserAccountServiceImpl;
 import cn.edu.seu.herald.sso.web.view.AuthenticationView;
 import cn.edu.seu.herald.sso.web.view.AuthenticationViewFactory;
 import java.io.IOException;
@@ -29,8 +33,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
@@ -38,30 +40,18 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class AuthenticationDispatcher extends HttpServlet {
 
-    public static final String STUDENT_USER_ACCOUNT_SERVICE_PARAM_NAME =
-            "student-user-account-service";
-
-    private static final String CONTEXT_CONFIG_PARAM_NAME = "context-config";
-
-    private static final String STUDENT_USER_ACCOUNT_SERVICE_BEAN_NAME =
-            "studentUserAccountService";
-
-    private static final String SINGLE_SIGN_ON_SESSION_SERVICE_BEAN_NAME =
-            "singleSignOnSessionService";
-
     private StudentUserAccountService sUserAccountService;
 
     private SingleSignOnSessionService ssoSessionService;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-        String contextConfig = config.getInitParameter(CONTEXT_CONFIG_PARAM_NAME);
-        ApplicationContext appContext = new ClassPathXmlApplicationContext(
-                contextConfig);
-        sUserAccountService = (StudentUserAccountService) appContext.getBean(
-                STUDENT_USER_ACCOUNT_SERVICE_BEAN_NAME);
-        ssoSessionService = (SingleSignOnSessionService) appContext.getBean(
-                SINGLE_SIGN_ON_SESSION_SERVICE_BEAN_NAME);
+        SessionServiceFactory sessionServiceFactory =
+                SessionServiceFactory.getInstance();
+        SessionService sessionService =
+                sessionServiceFactory.getSessionService();
+        sUserAccountService = new StudentUserAccountServiceImpl();
+        ssoSessionService = new SingleSignOnSessionServiceImpl(sessionService);
     }
 
     @Override
@@ -73,11 +63,16 @@ public class AuthenticationDispatcher extends HttpServlet {
                 sUserAccountService, ssoSessionService);
         AuthenticationView view = factory.getAuthenticationViewByType(typeName);
 
+        if (view == null) {
+            response.sendError(500, "no such invoke type: " + typeName);
+            return;
+        }
+
         Map<String, Object> model = new HashMap<String, Object>();
         Enumeration<String> paramNames = request.getParameterNames();
         while (paramNames.hasMoreElements()) {
             String paramName = paramNames.nextElement();
-            String paramValue = request.getParameter(typeName);
+            String paramValue = request.getParameter(paramName);
             model.put(paramName, paramValue);
         }
 
