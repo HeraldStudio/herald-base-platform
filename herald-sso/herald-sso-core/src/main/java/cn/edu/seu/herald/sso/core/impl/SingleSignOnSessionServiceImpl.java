@@ -43,7 +43,6 @@ public class SingleSignOnSessionServiceImpl
             throws SessionAccessException {
         StudentUser studentUser = ssoContext.getLogOnStudentUser();
         int cardNumber = studentUser.getCardNumber();
-        String studentId = studentUser.getStudentId();
         String fullName = studentUser.getFullName();
         Enumeration<String> attributeNames = ssoContext.getAttributeNames();
 
@@ -52,9 +51,6 @@ public class SingleSignOnSessionServiceImpl
         session.setAttribute(
                 SsoServiceConstants.CARD_NUMBER_NODE_NAME,
                 cardNumber);
-        session.setAttribute(
-                SsoServiceConstants.STUDENT_ID_NODE_NAME,
-                studentId);
         session.setAttribute(
                 SsoServiceConstants.STUDENT_FULL_NAME_NODE_NAME,
                 fullName);
