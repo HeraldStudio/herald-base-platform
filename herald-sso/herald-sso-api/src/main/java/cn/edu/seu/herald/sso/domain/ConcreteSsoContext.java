@@ -36,13 +36,10 @@ public class ConcreteSsoContext implements SingleSignOnContext {
     public StudentUser getLogOnStudentUser() {
         int cardNumber = (Integer) session.getAttribute(
                 SsoServiceConstants.CARD_NUMBER_NODE_NAME);
-        String studentId = (String) session.getAttribute(
-                SsoServiceConstants.STUDENT_ID_NODE_NAME);
         String fullName = (String) session.getAttribute(
                 SsoServiceConstants.STUDENT_FULL_NAME_NODE_NAME);
         StudentUser sUser = new StudentUser();
         sUser.setCardNumber(cardNumber);
-        sUser.setStudentId(studentId);
         sUser.setFullName(fullName);
         return sUser;
     }

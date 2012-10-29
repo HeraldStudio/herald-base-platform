@@ -21,11 +21,9 @@ package cn.edu.seu.herald.sso.domain;
  * @author rAy <predator.ray@gmail.com>
  */
 public class StudentUser {
-    
+
     private int cardNumber;
-    
-    private String studentId;
-    
+
     private String fullName;
 
     public int getCardNumber() {
@@ -34,14 +32,6 @@ public class StudentUser {
 
     public void setCardNumber(int cardNumber) {
         this.cardNumber = cardNumber;
-    }
-
-    public String getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
     }
 
     public String getFullName() {

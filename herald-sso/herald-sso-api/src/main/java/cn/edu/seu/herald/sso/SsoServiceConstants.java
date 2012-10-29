@@ -31,9 +31,6 @@ public interface SsoServiceConstants {
     String CARD_NUMBER_NODE_NAME = SSO_NODE_PREFIX + SSO_STUDENT_USER_PREFIX +
             "cardNumber";
 
-    String STUDENT_ID_NODE_NAME = SSO_NODE_PREFIX + SSO_STUDENT_USER_PREFIX +
-            "studentId";
-
     String STUDENT_FULL_NAME_NODE_NAME = SSO_NODE_PREFIX +
             SSO_STUDENT_USER_PREFIX + "fullName";
 
