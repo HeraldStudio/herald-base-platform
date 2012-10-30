@@ -37,7 +37,7 @@ import org.xml.sax.SAXException;
  * @author rAy <predator.ray@gmail.com>
  */
 public class DomRepresentationParser {
-    
+
     public Object getXmlObject(DomRepresentation representation, Class<?> cls)
             throws IOException, JAXBException {
         InputSource inputSource = representation.getInputSource();
@@ -45,26 +45,27 @@ public class DomRepresentationParser {
         Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
         return jaxbUnmarshaller.unmarshal(inputSource);
     }
-    
-    public DomRepresentation getRepresentation(Object obj) throws JAXBException,
-            IOException, ParserConfigurationException, SAXException {
+
+    public DomRepresentation getRepresentation(Object obj)
+            throws JAXBException, IOException, ParserConfigurationException,
+            SAXException {
         JAXBContext jaxbContext = JAXBContext.newInstance(obj.getClass());
         Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
         jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        
+
         Writer stringWriter = new StringWriter();
         try {
             jaxbMarshaller.marshal(obj, stringWriter);
         } finally {
             stringWriter.close();
         }
-        
+
         String xmlString = stringWriter.toString();
         DocumentBuilderFactory docBuilderFactory =
                 DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
         Document outputDocument = docBuilder.parse(new ByteArrayInputStream(
-                xmlString.getBytes()));
+                xmlString.getBytes("UTF-8")));
         DomRepresentation outputRepresentation = new DomRepresentation();
         outputRepresentation.setDocument(outputDocument);
         return outputRepresentation;

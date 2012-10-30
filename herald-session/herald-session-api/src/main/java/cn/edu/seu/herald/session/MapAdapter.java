@@ -35,7 +35,7 @@ import org.w3c.dom.NodeList;
  * @author rAy <predator.ray@gmail.com>
  */
 class MapAdapter extends XmlAdapter<Object, Map<String, Object>> {
-    
+
     private static final String ROOT_NODE_NAME = "properties";
 
     @Override
@@ -65,8 +65,9 @@ class MapAdapter extends XmlAdapter<Object, Map<String, Object>> {
         }
         return customXml;
     }
-    
-    private static void appendChild(Document doc, Element keyValuePair, Object obj) {
+
+    private static void appendChild(Document doc, Element keyValuePair,
+            Object obj) {
         try {
             JAXBContext jc = JAXBContext.newInstance(obj.getClass());
             Marshaller marshaller = jc.createMarshaller();

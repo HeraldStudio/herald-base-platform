@@ -32,11 +32,11 @@ import org.restlet.resource.ClientResource;
  * @author rAy <predator.ray@gmail.com>
  */
 public class SessionService implements SessionResourceConstants {
-    
+
     private ClientResourceFactory clientResourceFactory;
-    
+
     private DomRepresentationParser parser;
-    
+
     private static Exception getStatusException(Status responseStatus) {
         if (Status.CLIENT_ERROR_BAD_REQUEST.equals(responseStatus)) {
             return new BadRequestException();
@@ -49,32 +49,32 @@ public class SessionService implements SessionResourceConstants {
         }
         return new UnknownStatusException();
     }
-    
+
     public SessionService() {}
-    
+
     public SessionService(ClientResourceFactory clientResourceFactory) {
         this.clientResourceFactory = clientResourceFactory;
     }
-    
+
     public void setClientResourceFactory(
             ClientResourceFactory clientResourceFactory) {
         this.clientResourceFactory = clientResourceFactory;
     }
-    
+
     public void setDomRepresentationParser(DomRepresentationParser parser) {
         this.parser = parser;
     }
-    
+
     /**
      * Retrieves a new session from the session service
      * @return a new session
-     * @throws SessionCacheAccessException 
+     * @throws SessionCacheAccessException
      */
     public Session getSession() throws SessionAccessException {
         try {
             ClientResource clientResource = clientResourceFactory.newClientResource();
             Representation sessionRepr = clientResource.get();
-            
+
             Status responseStatus = clientResource.getResponse().getStatus();
             if (Status.SUCCESS_OK.equals(responseStatus)) {
                 DomRepresentation sessionDomRepr = new DomRepresentation(sessionRepr);
@@ -95,15 +95,18 @@ public class SessionService implements SessionResourceConstants {
      */
     public Session getSessionById(String id) throws SessionAccessException {
         try {
-            ClientResource clientResource = clientResourceFactory.newClientResource();
+            ClientResource clientResource =
+                    clientResourceFactory.newClientResource();
             clientResource.getReference().addQueryParameter(
                     SessionResourceConstants.SESSION_ID_QUERY_PARAM, id);
             Representation sessionRepr = clientResource.get();
-            
+
             Status responseStatus = clientResource.getResponse().getStatus();
             if (Status.SUCCESS_OK.equals(responseStatus)) {
-                DomRepresentation sessionDomRepr = new DomRepresentation(sessionRepr);
-                return (Session) parser.getXmlObject(sessionDomRepr, Session.class);
+                DomRepresentation sessionDomRepr =
+                        new DomRepresentation(sessionRepr);
+                return (Session) parser.getXmlObject(sessionDomRepr,
+                        Session.class);
             }
             throw getStatusException(responseStatus);
         } catch (Exception ex) {
@@ -114,15 +117,16 @@ public class SessionService implements SessionResourceConstants {
     /**
      * Updates the session
      * @param session the session to be updated
-     * @throws SessionCacheAccessException when session is invalid 
+     * @throws SessionCacheAccessException when session is invalid
      * or server error occurs
      */
     public void updateSession(Session session) throws SessionAccessException {
         try {
             Representation sessionRepr = parser.getRepresentation(session);
-            ClientResource clientResource = clientResourceFactory.newClientResource();
+            ClientResource clientResource =
+                    clientResourceFactory.newClientResource();
             Representation resultRepr = clientResource.post(sessionRepr);
-            
+
             Status responseStatus = clientResource.getResponse().getStatus();
             if (Status.SUCCESS_OK.equals(responseStatus)) {
                 return;
@@ -141,11 +145,12 @@ public class SessionService implements SessionResourceConstants {
      */
     public void removeSessionById(String id) throws SessionAccessException {
         try {
-            ClientResource clientResource = clientResourceFactory.newClientResource();
+            ClientResource clientResource =
+                    clientResourceFactory.newClientResource();
             clientResource.getReference().addQueryParameter(
                     SessionResourceConstants.SESSION_ID_QUERY_PARAM, id);
             Representation resultRepr = clientResource.delete();
-            
+
             Status responseStatus = clientResource.getResponse().getStatus();
             if (Status.SUCCESS_OK.equals(responseStatus)) {
                 return;
