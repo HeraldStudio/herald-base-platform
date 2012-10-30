@@ -21,6 +21,7 @@ import cn.edu.seu.herald.session.SessionService;
 import cn.edu.seu.herald.session.SessionServiceFactory;
 import cn.edu.seu.herald.session.exception.SessionAccessException;
 import cn.edu.seu.herald.session.jee.SessionServiceClient;
+import cn.edu.seu.herald.sso.core.AuthenticationException;
 import cn.edu.seu.herald.sso.core.SingleSignOnSessionService;
 import cn.edu.seu.herald.sso.core.StudentUserAccountService;
 import cn.edu.seu.herald.sso.domain.SingleSignOnContext;
@@ -66,18 +67,13 @@ public class WebFormAuthenticationView implements AuthenticationView {
         String failureRedirectUrl = (String)
                 model.get(FAILURE_REDIRECT_URL_PARAM);
 
-        SingleSignOnContext ssoContext =
-                studentUserAccountService.authenticate(username, password);
-        boolean authenticated = (ssoContext != null);
-
-        if (!authenticated) {
-            response.sendRedirect(failureRedirectUrl);
-            return;
-        }
-
         try {
+            SingleSignOnContext ssoContext =
+                    studentUserAccountService.authenticate(username, password);
             shareSsoContextInSession(request, response, ssoContext);
             response.sendRedirect(successRedirectUrl);
+        } catch (AuthenticationException ex) {
+            response.sendRedirect(failureRedirectUrl);
         } catch (SessionAccessException ex) {
             logger.log(Level.SEVERE, ex.getMessage(), ex);
             response.sendRedirect(failureRedirectUrl);

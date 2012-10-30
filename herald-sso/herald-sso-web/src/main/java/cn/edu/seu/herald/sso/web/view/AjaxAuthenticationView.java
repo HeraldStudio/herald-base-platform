@@ -20,6 +20,7 @@ import cn.edu.seu.herald.session.Session;
 import cn.edu.seu.herald.session.SessionService;
 import cn.edu.seu.herald.session.SessionServiceFactory;
 import cn.edu.seu.herald.session.exception.SessionAccessException;
+import cn.edu.seu.herald.sso.core.AuthenticationException;
 import cn.edu.seu.herald.sso.core.SingleSignOnSessionService;
 import cn.edu.seu.herald.sso.core.StudentUserAccountService;
 import cn.edu.seu.herald.sso.domain.SingleSignOnContext;
@@ -58,16 +59,13 @@ public class AjaxAuthenticationView implements AuthenticationView {
         String username = (String) model.get(USERNAME_PARAM_NAME);
         String password = (String) model.get(PASSWORD_PARAM_NAME);
         String sessionId = (String) model.get(SESSION_ID_PARAM_NAME);
-        SingleSignOnContext ssoContext =
-                studentUserAccountService.authenticate(username, password);
-        boolean authenticated = (ssoContext != null);
-        if (!authenticated) {
-            response.sendError(401);
-            return;
-        }
         try {
+            SingleSignOnContext ssoContext =
+                    studentUserAccountService.authenticate(username, password);
             shareSsoContextInSession(ssoContext, sessionId);
             printSsoContext(response, ssoContext);
+        } catch (AuthenticationException ex) {
+            response.sendError(401);
         } catch (SessionAccessException ex) {
             response.sendError(500, ex.getMessage());
         }
