@@ -21,15 +21,25 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  *
  * @author rAy <predator.ray@gmail.com>
  */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "singleSignOnContext")
 public class XmlSsoContext {
 
+    @XmlElement
     private StudentUser logOnStudentUser;
 
+    @XmlElement
+    @XmlJavaTypeAdapter(MapAdapter.class)
     private Map<String, Object> contextAttributes;
 
     public XmlSsoContext() {
