@@ -38,25 +38,25 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "session")
 public class Session implements Serializable {
-    
+
     @XmlElement
     private String id;
-    
+
     @XmlElement
     private long creationTime;
-    
+
     @XmlElement
     private long lastAccessedTime;
-    
+
     @XmlElement
     private String uri;
-    
+
     @XmlElement
     @XmlJavaTypeAdapter(MapAdapter.class)
     private Map<String, Object> properties;
-    
+
     private Session() {}
-    
+
     /**
      * Creates a session by its unique id and creation time.
      * The session will be identified by the id
@@ -110,7 +110,7 @@ public class Session implements Serializable {
     public String getId() {
         return id;
     }
-    
+
     public void setLastAccessedTime(long lastAccessedTime) {
         this.lastAccessedTime = lastAccessedTime;
     }
