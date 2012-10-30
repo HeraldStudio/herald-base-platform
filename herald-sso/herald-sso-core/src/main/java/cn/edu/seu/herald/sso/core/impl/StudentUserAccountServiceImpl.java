@@ -41,33 +41,44 @@ public class StudentUserAccountServiceImpl
     private IdentityFactory factory;
 
     public StudentUserAccountServiceImpl() {
+        logger.log(Level.INFO, "constructing IdentityFactory");
         try {
             String userHome = System.getProperty("user.home");
             factory = IdentityFactory.createFactory(userHome + COFIG_LOCATION);
+        logger.log(Level.INFO, "IdentityFactory constructed");
         } catch (Exception ex) {
             logger.log(Level.SEVERE, ex.getMessage(), ex);
+            throw new RuntimeException("fail to create IdentityFactory");
         }
     }
 
     @Override
     public SingleSignOnContext authenticate(String cardNumber,
             String password) throws AuthenticationException {
-        if (factory == null) {
-            throw new AuthenticationException();
-        }
-
+        logger.log(Level.INFO, new StringBuilder()
+                .append("authenticating ")
+                .append(cardNumber).toString());
         IdentityManager im = factory.getIdentityManager();
         boolean pass = im.checkPassword(cardNumber, password);
         if (!pass) {
+            logger.log(Level.INFO, new StringBuilder()
+                    .append("fail to authenticate ")
+                    .append(cardNumber).toString());
             throw new AuthenticationException();
         }
 
-        String fullName = im.getUserNameByID(password);
+        String fullName = im.getUserNameByID(cardNumber);
         StudentUser user = new StudentUser();
         user.setCardNumber(Integer.valueOf(cardNumber));
         user.setFullName(fullName);
         ConcreteSsoContext ssoContext = new ConcreteSsoContext();
         ssoContext.setLogOnStudentUser(user);
+
+        logger.log(Level.INFO, new StringBuilder()
+                .append("user(")
+                .append(cardNumber).append(", ")
+                .append(fullName).append(") authorized").toString());
+
         return ssoContext;
     }
 

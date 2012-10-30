@@ -24,6 +24,8 @@ import cn.edu.seu.herald.sso.core.SingleSignOnSessionService;
 import cn.edu.seu.herald.sso.domain.SingleSignOnContext;
 import cn.edu.seu.herald.sso.domain.StudentUser;
 import java.util.Enumeration;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -31,6 +33,9 @@ import java.util.Enumeration;
  */
 public class SingleSignOnSessionServiceImpl
         implements SingleSignOnSessionService {
+
+    private static final Logger logger = Logger.getLogger(
+            SingleSignOnSessionServiceImpl.class.getName());
 
     private SessionService sessionService;
 
@@ -45,6 +50,12 @@ public class SingleSignOnSessionServiceImpl
         int cardNumber = studentUser.getCardNumber();
         String fullName = studentUser.getFullName();
         Enumeration<String> attributeNames = ssoContext.getAttributeNames();
+
+        logger.log(Level.INFO,
+                new StringBuilder()
+                .append("sharing single sign on context: ")
+                .append("studentUser(").append(cardNumber)
+                .append(", ").append(fullName).append(")").toString());
 
         // write then into the session
         // write the properties of the student user
