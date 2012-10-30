@@ -16,14 +16,24 @@
 
 package cn.edu.seu.herald.sso.domain;
 
+import java.io.Serializable;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Represents the user of a SEU student
  * @author rAy <predator.ray@gmail.com>
  */
-public class StudentUser {
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "studentUser")
+public class StudentUser implements Serializable {
 
+    @XmlElement
     private int cardNumber;
 
+    @XmlElement
     private String fullName;
 
     public int getCardNumber() {
