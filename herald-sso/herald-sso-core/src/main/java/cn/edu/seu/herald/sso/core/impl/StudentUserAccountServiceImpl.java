@@ -16,10 +16,14 @@
 
 package cn.edu.seu.herald.sso.core.impl;
 
+import cn.edu.seu.herald.sso.core.AuthenticationException;
 import cn.edu.seu.herald.sso.core.StudentUserAccountService;
 import cn.edu.seu.herald.sso.domain.SingleSignOnContext;
 import cn.edu.seu.herald.sso.domain.StudentUser;
-import java.util.Enumeration;
+import com.wiscom.is.IdentityFactory;
+import com.wiscom.is.IdentityManager;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -28,10 +32,43 @@ import java.util.Enumeration;
 public class StudentUserAccountServiceImpl
         implements StudentUserAccountService {
 
+    private static final Logger logger = Logger.getLogger(
+            StudentUserAccountServiceImpl.class.getName());
+
+    private static final String COFIG_LOCATION =
+            "/config/com.wiscom.is.client.properties";
+
+    private IdentityFactory factory;
+
+    public StudentUserAccountServiceImpl() {
+        try {
+            String userHome = System.getProperty("user.home");
+            factory = IdentityFactory.createFactory(userHome + COFIG_LOCATION);
+        } catch (Exception ex) {
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
+        }
+    }
+
     @Override
     public SingleSignOnContext authenticate(String cardNumber,
-            String password) {
-        return null;
+            String password) throws AuthenticationException {
+        if (factory == null) {
+            throw new AuthenticationException();
+        }
+
+        IdentityManager im = factory.getIdentityManager();
+        boolean pass = im.checkPassword(cardNumber, password);
+        if (!pass) {
+            throw new AuthenticationException();
+        }
+
+        String fullName = im.getUserNameByID(password);
+        StudentUser user = new StudentUser();
+        user.setCardNumber(Integer.valueOf(cardNumber));
+        user.setFullName(fullName);
+        ConcreteSsoContext ssoContext = new ConcreteSsoContext();
+        ssoContext.setLogOnStudentUser(user);
+        return ssoContext;
     }
 
 }

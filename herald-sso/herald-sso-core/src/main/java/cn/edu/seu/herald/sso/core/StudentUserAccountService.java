@@ -32,6 +32,7 @@ public interface StudentUserAccountService {
      * @param password the password of the ic card
      * @return the single-sign-on context or null if not authenticated
      */
-    SingleSignOnContext authenticate(String cardNumber, String password);
+    SingleSignOnContext authenticate(String cardNumber, String password)
+            throws AuthenticationException;
 
 }
