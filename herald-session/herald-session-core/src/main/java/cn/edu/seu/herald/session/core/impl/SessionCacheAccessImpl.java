@@ -65,19 +65,44 @@ public class SessionCacheAccessImpl implements SessionCacheAccess {
     }
 
     @Override
-    public void updateSession(Session session)
+    public void updateSession(Session sessionToUpdate)
             throws SessionAccessException {
-        String sessionId = session.getId();
+        String sessionId = sessionToUpdate.getId();
         try {
-            Object cachedSession = jcsClient.get(sessionId);
-            if (cachedSession != null) {
-                jcsClient.put(sessionId, session);
+            Session cachedSession = (Session) jcsClient.get(sessionId);
+            if (cachedSession == null) {
+                throw new SessionAccessException("session not found");
             }
+            handleUnchangablePropertyUpdate(cachedSession, sessionToUpdate);
+            jcsClient.put(sessionId, sessionToUpdate);
         } catch (CacheException ex) {
             logger.log(Level.SEVERE, ex.getMessage(), ex);
             throw new SessionAccessException(ex);
         } finally {
             updateLastAccessTimeBySessionId(sessionId);
+        }
+    }
+
+    private void handleUnchangablePropertyUpdate(
+            Session cachedSession, Session sessionToUpdate)
+            throws SessionAccessException {
+        long creationTime1 = cachedSession.getCreationTime();
+        long creationTime2 = sessionToUpdate.getCreationTime();
+        long lastAccessedTime1 = cachedSession.getLastAccessedTime();
+        long lastAccessedTime2 = sessionToUpdate.getLastAccessedTime();
+        String uri1 = cachedSession.getUri();
+        String uri2 = sessionToUpdate.getUri();
+        if (creationTime1 != creationTime2) {
+            throw new SessionAccessException(
+                    "session property creationTime is not changable");
+        }
+        if (lastAccessedTime1 != lastAccessedTime2) {
+            // ignore
+            sessionToUpdate.setLastAccessedTime(lastAccessedTime1);
+        }
+        if (!uri1.equals(uri2)) {
+            // ignore
+            sessionToUpdate.setUri(uri1);
         }
     }
 
