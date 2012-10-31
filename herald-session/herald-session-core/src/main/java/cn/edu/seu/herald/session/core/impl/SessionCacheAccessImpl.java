@@ -90,7 +90,7 @@ public class SessionCacheAccessImpl implements SessionCacheAccess {
         long creationTime2 = sessionToUpdate.getCreationTime();
         long lastAccessedTime1 = cachedSession.getLastAccessedTime();
         long lastAccessedTime2 = sessionToUpdate.getLastAccessedTime();
-        String uri1 = cachedSession.getUri();
+        String uri1 = cachedSession.getUri();  // BUG FIXING: uri1 is null
         String uri2 = sessionToUpdate.getUri();
         if (creationTime1 != creationTime2) {
             throw new SessionAccessException(
