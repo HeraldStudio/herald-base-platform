@@ -6,21 +6,21 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Herald Base Platform</name>
-  
+
   <organization>
-      <name>Herald, Southeast University</name>
+      <name>Herald Studio, Southeast University</name>
       <url>http://herald.seu.edu.cn</url>
   </organization>
-  
+
   <modules>
     <module>herald-sso</module>
     <module>herald-session</module>
   </modules>
-  
+
   <properties>
       <netbeans.hint.license>apache20</netbeans.hint.license>
   </properties>
-  
+
   <licenses>
       <license>
           <name>Apache License, Version 2.0</name>
