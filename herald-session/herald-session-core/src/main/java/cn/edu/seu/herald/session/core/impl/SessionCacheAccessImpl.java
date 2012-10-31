@@ -30,8 +30,6 @@ import org.apache.jcs.access.exception.CacheException;
  */
 public class SessionCacheAccessImpl implements SessionCacheAccess {
 
-    private static final String NAMESPACE_PREFIX = "cn.edu.seu.herald.session.";
-
     private static final Logger logger = Logger.getLogger(
             SessionCacheAccessImpl.class.getName());
 
@@ -43,7 +41,7 @@ public class SessionCacheAccessImpl implements SessionCacheAccess {
 
     @Override
     public Session getSessionById(String id) throws SessionAccessException {
-        return (Session) jcsClient.get(id);
+        return updateLastAccessTimeBySessionId(id);
     }
 
     @Override
@@ -69,11 +67,31 @@ public class SessionCacheAccessImpl implements SessionCacheAccess {
     @Override
     public void updateSession(Session session)
             throws SessionAccessException {
+        String sessionId = session.getId();
         try {
-            Object cachedSession = jcsClient.get(session);
+            Object cachedSession = jcsClient.get(sessionId);
             if (cachedSession != null) {
-                jcsClient.put(session.getId(), session);
+                jcsClient.put(sessionId, session);
             }
+        } catch (CacheException ex) {
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
+            throw new SessionAccessException(ex);
+        } finally {
+            updateLastAccessTimeBySessionId(sessionId);
+        }
+    }
+
+    private Session updateLastAccessTimeBySessionId(String sessionId)
+            throws SessionAccessException {
+        Session cachedSession = (Session) jcsClient.get(sessionId);
+        if (cachedSession == null) {
+            return null;
+        }
+        try {
+            long currentTime = System.currentTimeMillis();
+            cachedSession.setLastAccessedTime(currentTime);
+            jcsClient.put(sessionId, cachedSession);
+            return cachedSession;
         } catch (CacheException ex) {
             logger.log(Level.SEVERE, ex.getMessage(), ex);
             throw new SessionAccessException(ex);
