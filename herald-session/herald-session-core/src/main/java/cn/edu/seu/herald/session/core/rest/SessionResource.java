@@ -20,7 +20,6 @@ import cn.edu.seu.herald.session.Session;
 import cn.edu.seu.herald.session.SessionResourceConstants;
 import cn.edu.seu.herald.session.core.SessionCacheAccess;
 import cn.edu.seu.herald.session.util.DomRepresentationParser;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.restlet.data.Parameter;
@@ -40,26 +39,26 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class SessionResource extends ServerResource
         implements SessionResourceConstants {
-    
+
     private static final String SESSION_CACHE_ACCESS_BEAN_NAME =
             "sessionCacheAccess";
-    
+
     private static final String SESSION_CONFIG_PATH =
             "classpath*:/cn/edu/seu/herald/session/herald-session-cache.xml";
-    
+
     private static final String MISSING_PARAM_SESSIONID_MSG =
             "missing parameter: id";
-    
+
     private static final String INVALID_OR_EXPIRED_SESSION_ID =
             "invalid or expired session id";
-    
+
     private static final Logger logger = Logger.getLogger(
             SessionResource.class.getName());
-    
+
     private SessionCacheAccess sessionCacheAccess;
-    
+
     private SessionFactory sessionFactory;
-    
+
     public SessionResource() {
         ApplicationContext context = new ClassPathXmlApplicationContext(
                 SESSION_CONFIG_PATH);
@@ -67,12 +66,13 @@ public class SessionResource extends ServerResource
                 .getBean(SESSION_CACHE_ACCESS_BEAN_NAME);
         sessionFactory = SessionFactory.getInstance();
     }
-    
+
     @Get("xml")
     public Representation getSession() {
         try {
-            Parameter sessionIdParam = getQuery().getFirst(SESSION_ID_QUERY_PARAM);
-            
+            Parameter sessionIdParam = getQuery()
+                    .getFirst(SESSION_ID_QUERY_PARAM);
+
             if (sessionIdParam == null) {
                 // create a new session
                 Session newSession = sessionFactory.newSession();
@@ -81,9 +81,10 @@ public class SessionResource extends ServerResource
                 DomRepresentationParser parser = new DomRepresentationParser();
                 return parser.getRepresentation(newSession);
             }
-            
+
             String sessionId = sessionIdParam.getValue();
-            Session cachedSession = sessionCacheAccess.getSessionById(sessionId);
+            Session cachedSession = sessionCacheAccess
+                    .getSessionById(sessionId);
             if (cachedSession == null) {
                 getResponse().setStatus(Status.CLIENT_ERROR_NOT_FOUND);
                 return SessionResourceUtils.getErrorRepresentation(
@@ -98,15 +99,16 @@ public class SessionResource extends ServerResource
             return SessionResourceUtils.getErrorRepresentation(ex);
         }
     }
-    
+
     @Post("xml:xml")
     public Representation updateSession(Representation sessionRepr) {
         try {
-            DomRepresentation sessionDomRepr = new DomRepresentation(sessionRepr);
+            DomRepresentation sessionDomRepr =
+                    new DomRepresentation(sessionRepr);
             DomRepresentationParser parser = new DomRepresentationParser();
-            Session newSession =
-                    (Session) parser.getXmlObject(sessionDomRepr, Session.class);
-            sessionCacheAccess.storeSession(newSession);
+            Session sessionToUpdate = (Session) parser
+                    .getXmlObject(sessionDomRepr, Session.class);
+            sessionCacheAccess.updateSession(sessionToUpdate);
             return SessionResourceUtils.getSuccessRepresentation();
         } catch (Exception ex) {
             logger.log(Level.SEVERE, ex.getMessage(), ex);
@@ -114,11 +116,12 @@ public class SessionResource extends ServerResource
             return SessionResourceUtils.getErrorRepresentation(ex);
         }
     }
-    
+
     @Delete("xml:xml")
     public Representation deleteSession() {
         try {
-            Parameter sessionIdParam = getQuery().getFirst(SESSION_ID_QUERY_PARAM);
+            Parameter sessionIdParam = getQuery()
+                    .getFirst(SESSION_ID_QUERY_PARAM);
             String sessionId = sessionIdParam.getValue();
             if (sessionId == null) {
                 getResponse().setStatus(Status.CLIENT_ERROR_BAD_REQUEST);

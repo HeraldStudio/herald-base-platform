@@ -29,14 +29,14 @@ import org.apache.jcs.access.exception.CacheException;
  * @author rAy <predator.ray@gmail.com>
  */
 public class SessionCacheAccessImpl implements SessionCacheAccess {
-    
+
     private static final String NAMESPACE_PREFIX = "cn.edu.seu.herald.session.";
-    
+
     private static final Logger logger = Logger.getLogger(
             SessionCacheAccessImpl.class.getName());
-    
+
     private JCS jcsClient;
-    
+
     public SessionCacheAccessImpl(JCS jcsClient) {
         this.jcsClient = jcsClient;
     }
@@ -69,6 +69,15 @@ public class SessionCacheAccessImpl implements SessionCacheAccess {
     @Override
     public void updateSession(Session session)
             throws SessionAccessException {
+        try {
+            Object cachedSession = jcsClient.get(session);
+            if (cachedSession != null) {
+                jcsClient.put(session.getId(), session);
+            }
+        } catch (CacheException ex) {
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
+            throw new SessionAccessException(ex);
+        }
     }
 
 }
