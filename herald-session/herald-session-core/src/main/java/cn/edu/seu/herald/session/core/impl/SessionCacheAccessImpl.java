@@ -41,7 +41,9 @@ public class SessionCacheAccessImpl implements SessionCacheAccess {
 
     @Override
     public Session getSessionById(String id) throws SessionAccessException {
-        return updateLastAccessTimeBySessionId(id);
+        Session cachedSession = (Session) jcsClient.get(id);
+        updateLastAccessTimeBySessionId(id);
+        return cachedSession;
     }
 
     @Override
@@ -90,7 +92,7 @@ public class SessionCacheAccessImpl implements SessionCacheAccess {
         long creationTime2 = sessionToUpdate.getCreationTime();
         long lastAccessedTime1 = cachedSession.getLastAccessedTime();
         long lastAccessedTime2 = sessionToUpdate.getLastAccessedTime();
-        String uri1 = cachedSession.getUri();  // BUG FIXING: uri1 is null
+        String uri1 = cachedSession.getUri();
         String uri2 = sessionToUpdate.getUri();
         if (creationTime1 != creationTime2) {
             throw new SessionAccessException(
@@ -100,7 +102,7 @@ public class SessionCacheAccessImpl implements SessionCacheAccess {
             // ignore
             sessionToUpdate.setLastAccessedTime(lastAccessedTime1);
         }
-        if (!uri1.equals(uri2)) {
+        if ((uri1 == null && uri2 != null) || !uri1.equals(uri2)) {
             // ignore
             sessionToUpdate.setUri(uri1);
         }
