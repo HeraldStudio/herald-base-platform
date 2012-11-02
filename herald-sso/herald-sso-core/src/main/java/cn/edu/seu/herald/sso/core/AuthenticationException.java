@@ -22,8 +22,10 @@ package cn.edu.seu.herald.sso.core;
  */
 public class AuthenticationException extends Exception {
 
+    private static final String DEFAULT_MSG = "authentication failed";
+
     public AuthenticationException() {
-        super();
+        super(DEFAULT_MSG);
     }
 
     public AuthenticationException(String msg) {

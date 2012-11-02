@@ -19,9 +19,17 @@
         <servlet-name>authenticationDispatcher</servlet-name>
         <servlet-class>cn.edu.seu.herald.sso.web.controller.AuthenticationDispatcher</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>logOutDispatcher</servlet-name>
+        <servlet-class>cn.edu.seu.herald.sso.web.controller.LogOutDispatcher</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>authenticationDispatcher</servlet-name>
         <url-pattern>/authentication</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>logOutDispatcher</servlet-name>
+        <url-pattern>/logout</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Herald, Southeast University.
+ * Copyright 2012 Herald Studio, Southeast University.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,23 +14,17 @@
  * limitations under the License.
  */
 
-package cn.edu.seu.herald.sso.core;
+package cn.edu.seu.herald.sso.web.view.logout;
 
-import cn.edu.seu.herald.session.Session;
-import cn.edu.seu.herald.session.exception.SessionAccessException;
-import cn.edu.seu.herald.sso.domain.SingleSignOnContext;
+import cn.edu.seu.herald.sso.web.view.View;
+import cn.edu.seu.herald.sso.web.view.View;
 
 /**
  *
  * @author rAy <predator.ray@gmail.com>
  */
-public interface SingleSignOnSessionService {
+public interface LogOutView extends View {
 
-    public void shareSingleSignOnContextInSession(
-            SingleSignOnContext ssoContext, Session session)
-            throws SessionAccessException;
-
-    public void removeSingleSignOnContextInSession(Session session)
-            throws SessionAccessException;
+    public static final String INVOKE_TYPE_PARAM_NAME = "type";
 
 }

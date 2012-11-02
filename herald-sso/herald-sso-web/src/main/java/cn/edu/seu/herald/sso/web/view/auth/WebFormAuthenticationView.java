@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.edu.seu.herald.sso.web.view;
+package cn.edu.seu.herald.sso.web.view.auth;
 
 import cn.edu.seu.herald.session.Session;
 import cn.edu.seu.herald.session.SessionService;

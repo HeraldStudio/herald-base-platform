@@ -13,27 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.edu.seu.herald.sso.web.view;
+package cn.edu.seu.herald.sso.web.view.auth;
 
-import java.io.IOException;
-import java.util.Map;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import cn.edu.seu.herald.sso.web.view.View;
 
 /**
  *
  * @author rAy <predator.ray@gmail.com>
  */
-public interface AuthenticationView {
+public interface AuthenticationView extends View {
 
     public static final String INVOKE_TYPE_PARAM_NAME = "type";
 
     public static final String USERNAME_PARAM_NAME = "username";
 
     public static final String PASSWORD_PARAM_NAME = "password";
-
-    public void render(Map<String, Object> model, HttpServletRequest request,
-            HttpServletResponse response) throws IOException, ServletException;
 
 }

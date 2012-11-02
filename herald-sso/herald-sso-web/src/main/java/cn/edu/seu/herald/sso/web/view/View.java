@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Herald, Southeast University.
+ * Copyright 2012 Herald Studio, Southeast University.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,23 +14,21 @@
  * limitations under the License.
  */
 
-package cn.edu.seu.herald.sso.core;
+package cn.edu.seu.herald.sso.web.view;
 
-import cn.edu.seu.herald.session.Session;
-import cn.edu.seu.herald.session.exception.SessionAccessException;
-import cn.edu.seu.herald.sso.domain.SingleSignOnContext;
+import java.io.IOException;
+import java.util.Map;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
  * @author rAy <predator.ray@gmail.com>
  */
-public interface SingleSignOnSessionService {
+public interface View {
 
-    public void shareSingleSignOnContextInSession(
-            SingleSignOnContext ssoContext, Session session)
-            throws SessionAccessException;
-
-    public void removeSingleSignOnContextInSession(Session session)
-            throws SessionAccessException;
+    public void render(Map<String, Object> model, HttpServletRequest request,
+            HttpServletResponse response) throws IOException, ServletException;
 
 }

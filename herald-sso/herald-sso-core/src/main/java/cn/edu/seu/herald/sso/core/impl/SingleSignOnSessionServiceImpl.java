@@ -78,4 +78,19 @@ public class SingleSignOnSessionServiceImpl
         sessionService.updateSession(session);
     }
 
+    public void removeSingleSignOnContextInSession(Session session)
+            throws SessionAccessException {
+        // remove the attributes which start with herald.sso
+        Enumeration<String> attribNames = session.getAttributeNames();
+        while (attribNames.hasMoreElements()) {
+            String attribName = attribNames.nextElement();
+            if (attribName != null && attribName.startsWith(
+                    SsoServiceConstants.SSO_NODE_PREFIX)) {
+                session.removeAttribute(attribName);
+            }
+        }
+        // update the session
+        sessionService.updateSession(session);
+    }
+
 }
