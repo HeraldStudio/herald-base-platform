@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package cn.edu.seu.herald.session.jee;
 
 import cn.edu.seu.herald.session.Session;
@@ -28,18 +27,18 @@ import javax.servlet.http.HttpServletResponse;
  * @author rAy <predator.ray@gmail.com>
  */
 public class SessionServiceClient {
-    
+
     private SessionService sessionCacheService;
-    
+
     public SessionServiceClient(SessionService sessionCacheService) {
         this.sessionCacheService = sessionCacheService;
     }
-    
+
     private static String getSessionId(Cookie[] cookies) {
         if (cookies == null) {
             return null;
         }
-        for (Cookie c: cookies) {
+        for (Cookie c : cookies) {
             String cookieName = c.getName();
             if (SessionJeeConstants.SESSION_COOKIE_NAME.equals(cookieName)) {
                 return c.getValue();
@@ -47,7 +46,7 @@ public class SessionServiceClient {
         }
         return null;
     }
-    
+
     public Session getSession(HttpServletRequest request,
             HttpServletResponse response) throws SessionAccessException {
         Cookie[] cookies = request.getCookies();
@@ -56,7 +55,7 @@ public class SessionServiceClient {
         if (found) {
             return sessionCacheService.getSessionById(sessionId);
         }
-        
+
         Session newSession = sessionCacheService.getSession();
         String newSessionId = newSession.getId();
         Cookie cookie = new Cookie(SessionJeeConstants.SESSION_COOKIE_NAME,
@@ -65,5 +64,4 @@ public class SessionServiceClient {
         response.addCookie(cookie);
         return newSession;
     }
-
 }

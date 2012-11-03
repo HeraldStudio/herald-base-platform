@@ -21,8 +21,6 @@ package cn.edu.seu.herald.session.jee;
  */
 public interface SessionJeeConstants {
 
-    String SESSION_COOKIE_NAME = "HERALD_SESSION";
-    
+    String SESSION_COOKIE_NAME = "HERALD_SESSION_ID";
     String HERALD_DOMAIN = "herald.seu.edu.cn";
-    
 }
