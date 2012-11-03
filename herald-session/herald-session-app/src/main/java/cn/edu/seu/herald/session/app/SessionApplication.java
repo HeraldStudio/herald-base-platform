@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package cn.edu.seu.herald.session.app;
 
 import org.restlet.Application;
@@ -25,16 +24,15 @@ import org.restlet.routing.Router;
  * @author rAy <predator.ray@gmail.com>
  */
 public class SessionApplication extends Application {
-    
+
     private Router sessionRouter;
-    
+
     public SessionApplication() {
         sessionRouter = new SessionRouter(getContext());
     }
-    
+
     @Override
     public synchronized Restlet createInboundRoot() {
         return sessionRouter;
     }
-
 }
