@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package cn.edu.seu.herald.session.core.rest;
 
 import cn.edu.seu.herald.session.SessionUpdateResult;
@@ -32,13 +31,12 @@ import org.xml.sax.SAXException;
  * @author rAy <predator.ray@gmail.com>
  */
 public class SessionResourceUtils {
-    
+
     private static final Logger logger = Logger.getLogger(
             SessionResourceUtils.class.getName());
-    
     private static final DomRepresentationParser parser =
             new DomRepresentationParser();
-    
+
     public static Representation getErrorRepresentation(Exception cause) {
         try {
             SessionUpdateResult failure = new SessionUpdateResult(cause);
@@ -48,7 +46,7 @@ public class SessionResourceUtils {
             return getDefaultErrorRepresentation();
         }
     }
-    
+
     public static Representation getErrorRepresentation(String msg) {
         try {
             SessionUpdateResult failure =
@@ -59,13 +57,12 @@ public class SessionResourceUtils {
             return getDefaultErrorRepresentation();
         }
     }
-    
     private static final String DEFAULT_ERROR_MSG = "unknown error";
-    
+
     public static Representation getDefaultErrorRepresentation() {
         return new StringRepresentation(DEFAULT_ERROR_MSG);
     }
-    
+
     public static Representation getSuccessRepresentation()
             throws JAXBException, IOException, IOException,
             ParserConfigurationException, SAXException {
@@ -73,5 +70,4 @@ public class SessionResourceUtils {
                 new SessionUpdateResult(SessionUpdateResult.ResultType.SUCCESS);
         return parser.getRepresentation(success);
     }
-
 }

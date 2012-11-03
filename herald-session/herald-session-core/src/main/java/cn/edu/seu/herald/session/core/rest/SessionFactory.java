@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package cn.edu.seu.herald.session.core.rest;
 
 import cn.edu.seu.herald.session.Session;
@@ -25,34 +24,30 @@ import java.util.UUID;
  * @author rAy <predator.ray@gmail.com>
  */
 public class SessionFactory {
-    
+
     private static SessionFactory factory;
-    
+
     public static SessionFactory getInstance() {
         if (factory == null) {
             factory = new SessionFactory();
         }
         return factory;
     }
-    
+
     protected SessionFactory() {
-        
     }
-    
+
     public Session newSession() {
         long currentTime = System.currentTimeMillis();
-        UUID uuid  =  UUID.randomUUID();
+        UUID uuid = UUID.randomUUID();
         String newSessionId = uuid.toString();
         Session newSession = new Session(newSessionId, currentTime);
-        
+
         StringBuilder uriBuilder = new StringBuilder();
-        uriBuilder.append(SessionResourceConstants.SERVICE_BASE_URI)
-                .append("?")
-                .append(SessionResourceConstants.SESSION_ID_QUERY_PARAM)
-                .append("=")
+        uriBuilder.append(SessionResourceConstants.SESSION_COLLECTION_URI)
+                .append("/")
                 .append(newSessionId);
         newSession.setUri(uriBuilder.toString());
         return newSession;
     }
-
 }

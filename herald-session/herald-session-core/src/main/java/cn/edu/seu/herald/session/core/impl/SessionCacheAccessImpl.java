@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package cn.edu.seu.herald.session.core.impl;
 
 import cn.edu.seu.herald.session.Session;
@@ -32,7 +31,6 @@ public class SessionCacheAccessImpl implements SessionCacheAccess {
 
     private static final Logger logger = Logger.getLogger(
             SessionCacheAccessImpl.class.getName());
-
     private JCS jcsClient;
 
     public SessionCacheAccessImpl(JCS jcsClient) {
@@ -124,5 +122,4 @@ public class SessionCacheAccessImpl implements SessionCacheAccess {
             throw new SessionAccessException(ex);
         }
     }
-
 }
