@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package cn.edu.seu.herald.session;
 
 import cn.edu.seu.herald.session.exception.BadRequestException;
@@ -34,7 +33,6 @@ import org.restlet.resource.ClientResource;
 public class SessionService implements SessionResourceConstants {
 
     private ClientResourceFactory clientResourceFactory;
-
     private DomRepresentationParser parser;
 
     private static Exception getStatusException(Status responseStatus) {
@@ -50,7 +48,8 @@ public class SessionService implements SessionResourceConstants {
         return new UnknownStatusException();
     }
 
-    public SessionService() {}
+    public SessionService() {
+    }
 
     public SessionService(ClientResourceFactory clientResourceFactory) {
         this.clientResourceFactory = clientResourceFactory;
@@ -67,13 +66,15 @@ public class SessionService implements SessionResourceConstants {
 
     /**
      * Retrieves a new session from the session service
+     *
      * @return a new session
      * @throws SessionCacheAccessException
      */
     public Session getSession() throws SessionAccessException {
         try {
-            ClientResource clientResource = clientResourceFactory.newClientResource();
-            Representation sessionRepr = clientResource.get();
+            ClientResource clientResource = clientResourceFactory
+                    .newSessionCollectionResource();
+            Representation sessionRepr = clientResource.post(null);
 
             Status responseStatus = clientResource.getResponse().getStatus();
             if (Status.SUCCESS_OK.equals(responseStatus)) {
@@ -88,17 +89,16 @@ public class SessionService implements SessionResourceConstants {
 
     /**
      * Retrieves session by its identifier from the session service
-     * @param id the identifier of the session
+     *
+     * @param sessionId the identifier of the session
      * @return the session of the identifier
-     * @throws SessionCacheAccessException when session is not found
-     * or server error occurs
+     * @throws SessionCacheAccessException when session is not found or server
+     * error occurs
      */
-    public Session getSessionById(String id) throws SessionAccessException {
+    public Session getSessionById(String sessionId) throws SessionAccessException {
         try {
             ClientResource clientResource =
-                    clientResourceFactory.newClientResource();
-            clientResource.getReference().addQueryParameter(
-                    SessionResourceConstants.SESSION_ID_QUERY_PARAM, id);
+                    clientResourceFactory.newSessionInstanceResource(sessionId);
             Representation sessionRepr = clientResource.get();
 
             Status responseStatus = clientResource.getResponse().getStatus();
@@ -116,16 +116,33 @@ public class SessionService implements SessionResourceConstants {
 
     /**
      * Updates the session
+     *
      * @param session the session to be updated
-     * @throws SessionCacheAccessException when session is invalid
-     * or server error occurs
+     * @throws SessionCacheAccessException when session is invalid or server
+     * error occurs
      */
     public void updateSession(Session session) throws SessionAccessException {
         try {
             Representation sessionRepr = parser.getRepresentation(session);
             ClientResource clientResource =
-                    clientResourceFactory.newClientResource();
-            Representation resultRepr = clientResource.post(sessionRepr);
+                    clientResourceFactory.newResource(session.getUri());
+            Representation resultRepr = clientResource.put(sessionRepr);
+
+            Status responseStatus = clientResource.getResponse().getStatus();
+            if (Status.SUCCESS_OK.equals(responseStatus)) {
+                return;
+            }
+            throw getStatusException(responseStatus);
+        } catch (Exception ex) {
+            throw new SessionAccessException(ex);
+        }
+    }
+
+    public void removeSession(Session session) throws SessionAccessException {
+        try {
+            ClientResource clientResource =
+                    clientResourceFactory.newResource(session.getUri());
+            clientResource.delete();
 
             Status responseStatus = clientResource.getResponse().getStatus();
             if (Status.SUCCESS_OK.equals(responseStatus)) {
@@ -139,16 +156,16 @@ public class SessionService implements SessionResourceConstants {
 
     /**
      * Removes the session by its identifier
-     * @param id the identifier of the session
-     * @throws SessionCacheAccessException when session is not found
-     * or server error occurs
+     *
+     * @param sessionId the identifier of the session
+     * @throws SessionCacheAccessException when session is not found or server
+     * error occurs
      */
-    public void removeSessionById(String id) throws SessionAccessException {
+    public void removeSessionById(String sessionId)
+            throws SessionAccessException {
         try {
             ClientResource clientResource =
-                    clientResourceFactory.newClientResource();
-            clientResource.getReference().addQueryParameter(
-                    SessionResourceConstants.SESSION_ID_QUERY_PARAM, id);
+                    clientResourceFactory.newSessionInstanceResource(sessionId);
             Representation resultRepr = clientResource.delete();
 
             Status responseStatus = clientResource.getResponse().getStatus();
@@ -160,5 +177,4 @@ public class SessionService implements SessionResourceConstants {
             throw new SessionAccessException(ex);
         }
     }
-
 }

@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package cn.edu.seu.herald.session;
 
 import cn.edu.seu.herald.session.util.DomRepresentationParser;
@@ -23,31 +22,28 @@ import cn.edu.seu.herald.session.util.DomRepresentationParser;
  * @author rAy <predator.ray@gmail.com>
  */
 public class SessionServiceFactory {
-    
+
     private static SessionServiceFactory factoryInstance;
-    
     private ClientResourceFactory clientResourceFactory;
-    
     private DomRepresentationParser parse;
-    
+
     public static SessionServiceFactory getInstance() {
         if (factoryInstance == null) {
             factoryInstance = new SessionServiceFactory();
         }
         return factoryInstance;
     }
-    
+
     protected SessionServiceFactory() {
         clientResourceFactory = new ClientResourceFactory(
-                SessionResourceConstants.SESSION_RESOURCE_URI);
+                SessionResourceConstants.SESSION_COLLECTION_URI);
         parse = new DomRepresentationParser();
     }
-    
+
     public SessionService getSessionService() {
         SessionService sessionCacheService =
                 new SessionService(clientResourceFactory);
         sessionCacheService.setDomRepresentationParser(parse);
         return sessionCacheService;
     }
-
 }

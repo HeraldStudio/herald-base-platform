@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package cn.edu.seu.herald.session.exception;
 
 /**
@@ -21,15 +20,14 @@ package cn.edu.seu.herald.session.exception;
  * @author rAy <predator.ray@gmail.com>
  */
 public class ServerInternalErrorException extends SessionAccessException {
-    
+
     private static final String DEFAULT_MSG = "server internal error occurred";
-    
+
     public ServerInternalErrorException() {
         super(DEFAULT_MSG);
     }
-    
+
     public ServerInternalErrorException(String msg) {
         super(msg);
     }
-
 }

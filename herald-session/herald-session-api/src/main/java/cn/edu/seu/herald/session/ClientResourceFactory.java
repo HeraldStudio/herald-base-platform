@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package cn.edu.seu.herald.session;
 
 import org.restlet.resource.ClientResource;
@@ -23,15 +22,24 @@ import org.restlet.resource.ClientResource;
  * @author rAy <predator.ray@gmail.com>
  */
 public class ClientResourceFactory {
-    
-    private String resourceUri;
-    
-    public ClientResourceFactory(String resourceUri) {
-        this.resourceUri = resourceUri;
-    }
-    
-    public ClientResource newClientResource() {
-        return new ClientResource(resourceUri);
+
+    private String sessionResourceUri;
+
+    public ClientResourceFactory(String sessionResourceUri) {
+        this.sessionResourceUri = sessionResourceUri;
     }
 
+    public ClientResource newResource(String uri) {
+        return new ClientResource(uri);
+    }
+
+    public ClientResource newSessionCollectionResource() {
+        return new ClientResource(sessionResourceUri);
+    }
+
+    public ClientResource newSessionInstanceResource(String sessionId) {
+        StringBuilder uriBuilder = new StringBuilder();
+        uriBuilder.append(sessionResourceUri).append("/").append(sessionId);
+        return new ClientResource(uriBuilder.toString());
+    }
 }

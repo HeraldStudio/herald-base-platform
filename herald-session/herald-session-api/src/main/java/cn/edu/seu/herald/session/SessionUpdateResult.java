@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package cn.edu.seu.herald.session;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -27,54 +26,52 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "result")
 public class SessionUpdateResult {
-    
+
     private ResultType type;
-    
     private String message;
-    
     private String exception;
-    
+
     public SessionUpdateResult() {
         this(ResultType.SUCCESS);
     }
-    
+
     public SessionUpdateResult(ResultType resultType) {
         this.type = resultType;
     }
-    
+
     public SessionUpdateResult(ResultType resultType, String message) {
         this.type = resultType;
         this.message = message;
     }
-    
+
     public SessionUpdateResult(Exception ex) {
         this(ResultType.FAILURE);
         this.exception = ex.getClass().getName();
         this.message = ex.getMessage();
     }
-    
+
     public ResultType getResultType() {
         return type;
     }
-    
+
     public void setMessage(String message) {
         this.message = message;
     }
-    
+
     public String getMessage() {
         return message;
     }
-    
+
     public void setExceptionName(String exceptionName) {
         this.exception = exceptionName;
     }
-    
+
     public String getExceptionName() {
         return exception;
     }
-    
+
     public static enum ResultType {
+
         SUCCESS, FAILURE
     }
-
 }

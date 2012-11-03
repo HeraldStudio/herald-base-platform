@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package cn.edu.seu.herald.session;
 
 import java.util.HashMap;
@@ -30,8 +29,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * Adaptes a java.util.Map Object and a keyvalue-paired object,
- * implements the marshal and unmarshal of the properties node
+ * Adaptes a java.util.Map Object and a keyvalue-paired object, implements the
+ * marshal and unmarshal of the properties node
+ *
  * @author rAy <predator.ray@gmail.com>
  */
 class MapAdapter extends XmlAdapter<Object, Map<String, Object>> {
@@ -43,9 +43,9 @@ class MapAdapter extends XmlAdapter<Object, Map<String, Object>> {
         Map<String, Object> map = new HashMap<String, Object>();
         Element rootElement = (Element) domTree;
         NodeList childNodes = rootElement.getChildNodes();
-        for(int x = 0; x < childNodes.getLength(); ++x) {
+        for (int x = 0; x < childNodes.getLength(); ++x) {
             Node childNode = childNodes.item(x);
-            if(childNode.getNodeType() == Node.ELEMENT_NODE) {
+            if (childNode.getNodeType() == Node.ELEMENT_NODE) {
                 map.put(childNode.getLocalName(), childNode.getTextContent());
             }
         }
@@ -58,7 +58,7 @@ class MapAdapter extends XmlAdapter<Object, Map<String, Object>> {
         DocumentBuilder db = dbf.newDocumentBuilder();
         Document doc = db.newDocument();
         Element customXml = doc.createElement(ROOT_NODE_NAME);
-        for (Map.Entry<String, Object> entry: map.entrySet()) {
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
             Element keyValuePair = doc.createElement(entry.getKey());
             appendChild(doc, keyValuePair, entry.getValue());
             customXml.appendChild(keyValuePair);
@@ -77,5 +77,4 @@ class MapAdapter extends XmlAdapter<Object, Map<String, Object>> {
             keyValuePair.appendChild(doc.createTextNode(obj.toString()));
         }
     }
-
 }

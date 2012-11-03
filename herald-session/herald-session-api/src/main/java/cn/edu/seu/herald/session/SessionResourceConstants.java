@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package cn.edu.seu.herald.session;
 
 /**
@@ -22,14 +21,13 @@ package cn.edu.seu.herald.session;
  */
 public interface SessionResourceConstants {
 
-    String SERVICE_BASE_URI = "http://127.0.0.1/session";
-
-    String SESSION_RESOURCE_PATH = "";
-
-    String SESSION_RESOURCE_URI = SERVICE_BASE_URI + SESSION_RESOURCE_PATH;
-
-    String SESSION_ID_QUERY_PARAM = "id";
-
+    String SERVICE_BASE_URI = "http://127.0.0.1/sessionservice";
+    String SESSION_COLLECTION_PATH = "/sessions";
+    String SESSION_ID_PARAM_NAME = "session-id";
+    String SESSION_INSTANCE_PATH = SESSION_COLLECTION_PATH
+            + "/{" + SESSION_ID_PARAM_NAME + "}";
+    String SESSION_COLLECTION_URI = SERVICE_BASE_URI + SESSION_COLLECTION_PATH;
+    String SESSION_INSTANCE_URI = SESSION_COLLECTION_URI
+            + SESSION_INSTANCE_PATH;
     long SESSION_EXPIRE_TIME_IN_SECONDs = 60 * 30;
-
 }

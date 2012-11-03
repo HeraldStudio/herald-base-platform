@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package cn.edu.seu.herald.session.exception;
 
 import org.restlet.data.Status;
@@ -23,11 +22,11 @@ import org.restlet.data.Status;
  * @author rAy <predator.ray@gmail.com>
  */
 public class UnknownStatusException extends SessionAccessException {
-    
+
     public UnknownStatusException() {
         super("unknown status");
     }
-    
+
     public UnknownStatusException(Status status) {
         super(new StringBuilder()
                 .append("unknown status ")
@@ -35,5 +34,4 @@ public class UnknownStatusException extends SessionAccessException {
                 .append(" ")
                 .append(status.getName()).toString());
     }
-
 }

@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package cn.edu.seu.herald.session.exception;
 
 /**
@@ -21,21 +20,20 @@ package cn.edu.seu.herald.session.exception;
  * @author rAy <predator.ray@gmail.com>
  */
 public class SessionAccessException extends Exception {
-    
+
     public SessionAccessException() {
         super();
     }
-    
+
     public SessionAccessException(Throwable cause) {
         super(cause);
     }
-    
+
     public SessionAccessException(String msg) {
         super(msg);
     }
-    
+
     public SessionAccessException(String msg, Throwable cause) {
         super(msg, cause);
     }
-
 }

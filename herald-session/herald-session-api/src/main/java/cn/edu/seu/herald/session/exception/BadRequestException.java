@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package cn.edu.seu.herald.session.exception;
 
 /**
@@ -21,16 +20,15 @@ package cn.edu.seu.herald.session.exception;
  * @author rAy <predator.ray@gmail.com>
  */
 public class BadRequestException extends SessionAccessException {
-    
+
     private static final String DEFAULT_MSG =
             "bad request exception occurred, check the request syntax";
-    
+
     public BadRequestException() {
         super(DEFAULT_MSG);
     }
-    
+
     public BadRequestException(String msg) {
         super(msg);
     }
-
 }
