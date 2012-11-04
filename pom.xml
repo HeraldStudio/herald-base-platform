@@ -6,25 +6,52 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Herald Base Platform</name>
-
-  <organization>
-      <name>Herald Studio, Southeast University</name>
-      <url>http://herald.seu.edu.cn</url>
-  </organization>
-
-  <modules>
-    <module>herald-sso</module>
-    <module>herald-session</module>
-  </modules>
-
-  <properties>
-      <netbeans.hint.license>apache20</netbeans.hint.license>
-  </properties>
-
   <licenses>
       <license>
           <name>Apache License, Version 2.0</name>
           <url>http://www.apache.org/licenses/LICENSE-2.0</url>
       </license>
   </licenses>
+  <organization>
+      <name>Herald Studio, Southeast University</name>
+      <url>http://herald.seu.edu.cn</url>
+  </organization>
+  <properties>
+      <netbeans.hint.license>apache20</netbeans.hint.license>
+  </properties>
+
+  <modules>
+    <module>herald-sso</module>
+    <module>herald-session</module>
+  </modules>
+
+  <distributionManagement>
+      <repository>
+          <id>herald-release-repo</id>
+          <name>Herald Release Repository</name>
+          <url>dav:http://herald.seu.edu.cn/nexus/content/repositories/releases/</url>
+          <uniqueVersion>true</uniqueVersion>
+      </repository>
+      <snapshotRepository>
+          <id>herald-snapshot-repo</id>
+          <name>Herald Snapshot Repository</name>
+          <url>dav:http://herald.seu.edu.cn/nexus/content/repositories/snapshots/</url>
+          <uniqueVersion>true</uniqueVersion>
+      </snapshotRepository>
+  </distributionManagement>
+
+  <scm>
+      <tag>HEAD</tag>
+      <connection>scm:git:https://github.com/HeraldStudio/herald-base-platform.git</connection>
+  </scm>
+
+  <build>
+      <extensions>
+          <extension>
+              <groupId>org.apache.maven.wagon</groupId>
+              <artifactId>wagon-webdav</artifactId>
+              <version>1.0-beta-2</version>
+          </extension>
+      </extensions>
+  </build>
 </project>

@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package cn.edu.seu.herald.sso.impl;
 
 import cn.edu.seu.herald.sso.domain.StudentUser;
@@ -35,10 +34,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlRootElement(name = "singleSignOnContext")
 public class XmlSsoContext {
 
-    @XmlElement
+    @XmlElement(name = "studentUser")
     private StudentUser logOnStudentUser;
-
-    @XmlElement
+    @XmlElement(name = "properties")
     @XmlJavaTypeAdapter(MapAdapter.class)
     private Map<String, Object> contextAttributes;
 
@@ -69,5 +67,4 @@ public class XmlSsoContext {
     public void removeAttribute(String name) {
         contextAttributes.remove(name);
     }
-
 }
