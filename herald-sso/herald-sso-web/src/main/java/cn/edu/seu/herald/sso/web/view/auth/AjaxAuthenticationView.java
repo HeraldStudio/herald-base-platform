@@ -28,6 +28,8 @@ import cn.edu.seu.herald.sso.impl.XmlSsoContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,6 +41,9 @@ import javax.xml.bind.Marshaller;
  * @author rAy <predator.ray@gmail.com>
  */
 public class AjaxAuthenticationView implements AuthenticationView {
+
+    private static final Logger logger = Logger.getLogger(
+            AjaxAuthenticationView.class.getName());
 
     public static final String SESSION_ID_PARAM_NAME = "sessionid";
 
@@ -67,6 +72,7 @@ public class AjaxAuthenticationView implements AuthenticationView {
         } catch (AuthenticationException ex) {
             response.sendError(401);
         } catch (SessionAccessException ex) {
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
             response.sendError(500, ex.getMessage());
         }
     }
@@ -91,6 +97,7 @@ public class AjaxAuthenticationView implements AuthenticationView {
             jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             jaxbMarshaller.marshal(ssoContext, out);
         } catch (Exception ex) {
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
             response.sendError(500, ex.getMessage());
         } finally {
             out.close();
