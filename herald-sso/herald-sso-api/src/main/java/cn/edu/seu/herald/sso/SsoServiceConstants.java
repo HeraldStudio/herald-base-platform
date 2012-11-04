@@ -28,10 +28,8 @@ public interface SsoServiceConstants {
 
     String SSO_CONTEXT_PROPERTIES_PREFIX = SSO_NODE_PREFIX + "property.";
 
-    String CARD_NUMBER_NODE_NAME = SSO_NODE_PREFIX + SSO_STUDENT_USER_PREFIX +
-            "cardNumber";
+    String CARD_NUMBER_NODE_NAME = SSO_STUDENT_USER_PREFIX + "cardNumber";
 
-    String STUDENT_FULL_NAME_NODE_NAME = SSO_NODE_PREFIX +
-            SSO_STUDENT_USER_PREFIX + "fullName";
+    String STUDENT_FULL_NAME_NODE_NAME = SSO_STUDENT_USER_PREFIX + "fullName";
 
 }
