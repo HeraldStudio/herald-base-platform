@@ -60,7 +60,7 @@ public class SessionServiceClient {
         String newSessionId = newSession.getId();
         Cookie cookie = new Cookie(SessionJeeConstants.SESSION_COOKIE_NAME,
                 newSessionId);
-        cookie.setDomain(SessionJeeConstants.HERALD_DOMAIN);
+        cookie.setPath("/");
         response.addCookie(cookie);
         return newSession;
     }
