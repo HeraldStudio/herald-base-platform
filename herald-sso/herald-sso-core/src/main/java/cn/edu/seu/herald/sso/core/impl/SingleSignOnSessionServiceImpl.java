@@ -24,6 +24,8 @@ import cn.edu.seu.herald.sso.core.SingleSignOnSessionService;
 import cn.edu.seu.herald.sso.domain.SingleSignOnContext;
 import cn.edu.seu.herald.sso.domain.StudentUser;
 import java.util.Enumeration;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -82,12 +84,16 @@ public class SingleSignOnSessionServiceImpl
             throws SessionAccessException {
         // remove the attributes which start with herald.sso
         Enumeration<String> attribNames = session.getAttributeNames();
+        List<String> attribsToBeRemoved = new LinkedList<String>();
         while (attribNames.hasMoreElements()) {
             String attribName = attribNames.nextElement();
             if (attribName != null && attribName.startsWith(
                     SsoServiceConstants.SSO_NODE_PREFIX)) {
-                session.removeAttribute(attribName);
+                attribsToBeRemoved.add(attribName);
             }
+        }
+        for (String attribName: attribsToBeRemoved) {
+            session.removeAttribute(attribName);
         }
         // update the session
         sessionService.updateSession(session);
