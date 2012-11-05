@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package cn.edu.seu.herald.sso.web.view.auth;
 
 import cn.edu.seu.herald.session.Session;
@@ -25,6 +24,7 @@ import cn.edu.seu.herald.sso.core.SingleSignOnSessionService;
 import cn.edu.seu.herald.sso.core.StudentUserAccountService;
 import cn.edu.seu.herald.sso.domain.SingleSignOnContext;
 import cn.edu.seu.herald.sso.impl.XmlSsoContext;
+import cn.edu.seu.herald.sso.impl.XmlSsoContextParser;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Map;
@@ -44,11 +44,8 @@ public class AjaxAuthenticationView implements AuthenticationView {
 
     private static final Logger logger = Logger.getLogger(
             AjaxAuthenticationView.class.getName());
-
     public static final String SESSION_ID_PARAM_NAME = "sessionid";
-
     private StudentUserAccountService studentUserAccountService;
-
     private SingleSignOnSessionService ssoSessionService;
 
     public AjaxAuthenticationView(
@@ -89,13 +86,15 @@ public class AjaxAuthenticationView implements AuthenticationView {
 
     private void printSsoContext(HttpServletResponse response,
             SingleSignOnContext ssoContext) throws IOException {
-        PrintWriter out  = response.getWriter();
+        PrintWriter out = response.getWriter();
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(
                     XmlSsoContext.class);
+            XmlSsoContextParser ssoContextParser = new XmlSsoContextParser();
+            XmlSsoContext xmlSsoContext = ssoContextParser.parse(ssoContext);
             Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
             jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            jaxbMarshaller.marshal(ssoContext, out);
+            jaxbMarshaller.marshal(xmlSsoContext, out);
         } catch (Exception ex) {
             logger.log(Level.SEVERE, ex.getMessage(), ex);
             response.sendError(500, ex.getMessage());
@@ -103,5 +102,4 @@ public class AjaxAuthenticationView implements AuthenticationView {
             out.close();
         }
     }
-
 }
