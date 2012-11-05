@@ -17,6 +17,7 @@ package cn.edu.seu.herald.session.jee;
 
 import cn.edu.seu.herald.session.Session;
 import cn.edu.seu.herald.session.SessionService;
+import cn.edu.seu.herald.session.exception.InvalidSessionIdException;
 import cn.edu.seu.herald.session.exception.SessionAccessException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -52,10 +53,20 @@ public class SessionServiceClient {
         Cookie[] cookies = request.getCookies();
         String sessionId = getSessionId(cookies);
         boolean found = (sessionId != null);
-        if (found) {
-            return sessionCacheService.getSessionById(sessionId);
+        if (!found) {
+            return createNewSession(response);
         }
+        // if found
+        try {
+            return sessionCacheService.getSessionById(sessionId);
+        } catch (InvalidSessionIdException ex) {
+            // if session is invalid or expired
+            return createNewSession(response);
+        }
+    }
 
+    private Session createNewSession(HttpServletResponse response)
+            throws SessionAccessException {
         Session newSession = sessionCacheService.getSession();
         String newSessionId = newSession.getId();
         Cookie cookie = new Cookie(SessionJeeConstants.SESSION_COOKIE_NAME,
