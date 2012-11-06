@@ -9,7 +9,7 @@
     </parent>
     <groupId>cn.edu.seu.herald</groupId>
     <artifactId>herald-sso-core</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0-ALPHA1</version>
     <name>Herald Single-Sign-On Service Core Layer</name>
     <url>http://maven.apache.org</url>
     <properties>

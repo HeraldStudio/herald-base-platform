@@ -9,7 +9,7 @@
   </parent>
   <groupId>cn.edu.seu.herald</groupId>
   <artifactId>herald-session-api</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0-ALPHA1</version>
   <name>Herald Session Service API</name>
   <url>http://maven.apache.org</url>
     <build>

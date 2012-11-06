@@ -9,7 +9,7 @@
   </parent>
   <groupId>cn.edu.seu.herald</groupId>
   <artifactId>herald-session-core</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0-ALPHA1</version>
   <name>Herald Session Service Core Layer</name>
   <url>http://maven.apache.org</url>
     <build>

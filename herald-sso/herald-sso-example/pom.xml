@@ -9,7 +9,7 @@
 
     <groupId>cn.edu.seu.herald</groupId>
     <artifactId>herald-sso-example</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0-ALPHA1</version>
     <packaging>war</packaging>
 
     <name>Herald Single-Sign-On Service Example</name>

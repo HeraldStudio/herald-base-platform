@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package cn.edu.seu.herald.session.example;
 
 import cn.edu.seu.herald.session.Session;
@@ -25,37 +24,37 @@ import java.util.Enumeration;
 
 /**
  * The demo program of the usage of Session API
+ *
  * @author rAy <predator.ray@gmail.com>
  */
 public class Demo {
 
     /**
      * the entrance of demo program
-     * @param args 
+     *
+     * @param args
      */
     public static void main(String[] args) {
         Demo demo = new Demo();
         try {
             demo.createSession();
             System.out.println();
-            
+
             demo.updateSession();
             System.out.println();
-            
+
             demo.retrieveSession();
             System.out.println();
-            
+
             demo.deleteSession();
             System.out.println();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
-    
     private SessionService sessionService;
-    
     private Session session;
-    
+
     public Demo() {
         // get an instance of session service factory
         SessionServiceFactory sessionServiceFactory =
@@ -63,7 +62,7 @@ public class Demo {
         // get the session service by the factory
         this.sessionService = sessionServiceFactory.getSessionService();
     }
-    
+
     /*
      * The demo of creating a session
      */
@@ -75,7 +74,7 @@ public class Demo {
         // store the session retrieved
         this.session = newSession;
     }
-    
+
     /*
      * The demo of updating a session by its id
      */
@@ -87,7 +86,7 @@ public class Demo {
         // update the session
         sessionService.updateSession(session);
     }
-    
+
     public void retrieveSession() throws SessionAccessException {
         String sessionId = session.getId();
         // retrieve the session by its identifier
@@ -97,14 +96,14 @@ public class Demo {
         printSessionInfo(sessionRetrieved);
         printSessionInfo(session);
     }
-    
+
     public void deleteSession() throws SessionAccessException {
         String sessionId = session.getId();
         // delete the session by its identifier
         sessionService.removeSessionById(sessionId);
         // if retrieve it again, 404(not found) will be returned
     }
-    
+
     private static void printSessionInfo(Session session) {
         // get the identifier of the session
         String sessionid = session.getId();
@@ -130,5 +129,4 @@ public class Demo {
             System.out.println("\t" + attributeName + " : " + attribute);
         }
     }
-
 }

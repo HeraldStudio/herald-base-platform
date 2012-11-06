@@ -9,7 +9,7 @@
 
     <groupId>cn.edu.seu.herald</groupId>
     <artifactId>herald-session-app</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0-ALPHA1</version>
     <packaging>war</packaging>
 
     <name>Herald Session Service Application Layer</name>
@@ -18,7 +18,7 @@
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    
+
     <repositories>
         <repository>
             <id>maven-restlet</id>

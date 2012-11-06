@@ -18,8 +18,23 @@ limitations under the License.
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title>log on with ajax</title>
+        <script><![CDATA[
+            if (window.XMLHttpRequest) {
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onReadyStateChange = function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    document.getElementById("info").innerHTML = xmlResponseText;
+                }
+            }
+        ]]>
+        xmlhttp.open("POST", url, true);
+        xmlhttp.send();
+        </script>
     </head>
     <body>
-        <div>TODO write content</div>
+        <div id="info"></div>
     </body>
 </html>
