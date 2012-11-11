@@ -119,6 +119,10 @@ public class Demo {
         Date lastAccessedDate = new Date(lastAccessedTime);
         System.out.println("session last accessed time: " + lastAccessedDate);
 
+        // get the uri time of the session
+        String uri = session.getUri();
+        System.out.println("session uri: " + uri);
+
         // get the names of the attributes
         System.out.println("session attributes:");
         Enumeration<String> attributeNames = session.getAttributeNames();

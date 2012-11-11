@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>cn.edu.seu.herald</groupId>
   <artifactId>herald-base-platform</artifactId>
-  <version>1.0-ALPHA1</version>
+  <version>1.0-ALPHA2</version>
   <packaging>pom</packaging>
   <name>Herald Base Platform</name>
   <licenses>
@@ -24,21 +24,6 @@
     <module>herald-sso</module>
     <module>herald-session</module>
   </modules>
-
-  <distributionManagement>
-      <repository>
-          <id>herald-release-repo</id>
-          <name>Herald Release Repository</name>
-          <url>dav:http://herald.seu.edu.cn/nexus/content/repositories/releases/</url>
-          <uniqueVersion>true</uniqueVersion>
-      </repository>
-      <snapshotRepository>
-          <id>herald-snapshot-repo</id>
-          <name>Herald Snapshot Repository</name>
-          <url>dav:http://herald.seu.edu.cn/nexus/content/repositories/snapshots/</url>
-          <uniqueVersion>true</uniqueVersion>
-      </snapshotRepository>
-  </distributionManagement>
 
   <scm>
       <tag>HEAD</tag>

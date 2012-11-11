@@ -15,10 +15,12 @@
  */
 package cn.edu.seu.herald.sso.web.controller;
 
+import cn.edu.seu.herald.session.ClientResourceFactory;
 import cn.edu.seu.herald.session.SessionService;
 import cn.edu.seu.herald.session.SessionServiceFactory;
 import cn.edu.seu.herald.sso.core.SingleSignOnSessionService;
 import cn.edu.seu.herald.sso.core.impl.SingleSignOnSessionServiceImpl;
+import cn.edu.seu.herald.sso.web.SingleSignOnContextListener;
 import cn.edu.seu.herald.sso.web.view.logout.LogOutView;
 import cn.edu.seu.herald.sso.web.view.logout.LogOutViewFactory;
 import java.io.IOException;
@@ -41,10 +43,12 @@ public class LogOutDispatcher extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-        SessionServiceFactory sessionServiceFactory =
-                SessionServiceFactory.getInstance();
-        SessionService sessionService =
-                sessionServiceFactory.getSessionService();
+        String serviceUrl = config.getServletContext().getInitParameter(
+                SingleSignOnContextListener.SESSION_SERVICE_URL_PARAM_NAME);
+        ClientResourceFactory clientResourceFactory =
+                new ClientResourceFactory(serviceUrl);
+        SessionService sessionService = new SessionService(
+                clientResourceFactory);
         ssoSessionService = new SingleSignOnSessionServiceImpl(sessionService);
     }
 

@@ -15,6 +15,8 @@
  */
 package cn.edu.seu.herald.session;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.restlet.resource.ClientResource;
 
 /**
@@ -23,10 +25,13 @@ import org.restlet.resource.ClientResource;
  */
 public class ClientResourceFactory {
 
-    private String sessionResourceUri;
+    private static final Logger logger = Logger.getLogger(
+            ClientResourceFactory.class.getName());
+    private String sessionServiceUri;
 
-    public ClientResourceFactory(String sessionResourceUri) {
-        this.sessionResourceUri = sessionResourceUri;
+    public ClientResourceFactory(String sessionServiceUri) {
+        logConstructingFactory(sessionServiceUri);
+        this.sessionServiceUri = sessionServiceUri;
     }
 
     public ClientResource newResource(String uri) {
@@ -34,12 +39,35 @@ public class ClientResourceFactory {
     }
 
     public ClientResource newSessionCollectionResource() {
-        return new ClientResource(sessionResourceUri);
+        StringBuilder uriBuilder = new StringBuilder();
+        uriBuilder.append(sessionServiceUri)
+                .append(SessionResourceConstants.SESSION_COLLECTION_PATH);
+        String collectionUri = uriBuilder.toString();
+        logRetrievingResource(collectionUri);
+        return new ClientResource(collectionUri);
     }
 
     public ClientResource newSessionInstanceResource(String sessionId) {
         StringBuilder uriBuilder = new StringBuilder();
-        uriBuilder.append(sessionResourceUri).append("/").append(sessionId);
-        return new ClientResource(uriBuilder.toString());
+        uriBuilder.append(sessionServiceUri)
+                .append(SessionResourceConstants.SESSION_COLLECTION_PATH)
+                .append("/").append(sessionId);
+        String instanceUri = uriBuilder.toString();
+        logRetrievingResource(instanceUri);
+        return new ClientResource(instanceUri);
+    }
+
+    private static void logConstructingFactory(String sessionResourceUri) {
+        StringBuilder logBuilder = new StringBuilder();
+        logBuilder.append("constructing ClientResourceFactory: ")
+                .append(sessionResourceUri);
+        logger.log(Level.INFO, logBuilder.toString());
+    }
+
+    private static void logRetrievingResource(String resourceUri) {
+        StringBuilder logBuilder = new StringBuilder();
+        logBuilder.append("retrieving resource: ")
+                .append(resourceUri);
+        logger.log(Level.INFO, logBuilder.toString());
     }
 }

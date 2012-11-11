@@ -4,11 +4,11 @@
   <parent>
     <artifactId>herald-base-platform</artifactId>
     <groupId>cn.edu.seu.herald</groupId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0-ALPHA2</version>
   </parent>
   <groupId>cn.edu.seu.herald</groupId>
   <artifactId>herald-session</artifactId>
-  <version>1.0-ALPHA1</version>
+  <version>1.0-ALPHA2</version>
   <packaging>pom</packaging>
   <name>Herald Session Service</name>
   <modules>

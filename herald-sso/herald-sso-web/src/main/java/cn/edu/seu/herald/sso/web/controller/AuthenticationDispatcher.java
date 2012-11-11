@@ -16,12 +16,13 @@
 
 package cn.edu.seu.herald.sso.web.controller;
 
+import cn.edu.seu.herald.session.ClientResourceFactory;
 import cn.edu.seu.herald.session.SessionService;
-import cn.edu.seu.herald.session.SessionServiceFactory;
 import cn.edu.seu.herald.sso.core.SingleSignOnSessionService;
 import cn.edu.seu.herald.sso.core.StudentUserAccountService;
 import cn.edu.seu.herald.sso.core.impl.SingleSignOnSessionServiceImpl;
 import cn.edu.seu.herald.sso.core.impl.StudentUserAccountServiceImpl;
+import cn.edu.seu.herald.sso.web.SingleSignOnContextListener;
 import cn.edu.seu.herald.sso.web.view.auth.AuthenticationView;
 import cn.edu.seu.herald.sso.web.view.auth.AuthenticationViewFactory;
 import java.io.IOException;
@@ -46,11 +47,14 @@ public class AuthenticationDispatcher extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-        SessionServiceFactory sessionServiceFactory =
-                SessionServiceFactory.getInstance();
-        SessionService sessionService =
-                sessionServiceFactory.getSessionService();
         sUserAccountService = new StudentUserAccountServiceImpl();
+
+        String serviceUrl = config.getServletContext().getInitParameter(
+                SingleSignOnContextListener.SESSION_SERVICE_URL_PARAM_NAME);
+        ClientResourceFactory clientResourceFactory =
+                new ClientResourceFactory(serviceUrl);
+        SessionService sessionService = new SessionService(
+                clientResourceFactory);
         ssoSessionService = new SingleSignOnSessionServiceImpl(sessionService);
     }
 

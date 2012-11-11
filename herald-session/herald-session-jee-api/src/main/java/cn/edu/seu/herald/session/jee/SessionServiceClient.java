@@ -16,6 +16,7 @@
 package cn.edu.seu.herald.session.jee;
 
 import cn.edu.seu.herald.session.Session;
+import cn.edu.seu.herald.session.SessionResourceConstants;
 import cn.edu.seu.herald.session.SessionService;
 import cn.edu.seu.herald.session.exception.InvalidSessionIdException;
 import cn.edu.seu.herald.session.exception.SessionAccessException;
@@ -72,6 +73,8 @@ public class SessionServiceClient {
         Cookie cookie = new Cookie(SessionJeeConstants.SESSION_COOKIE_NAME,
                 newSessionId);
         cookie.setPath("/");
+        cookie.setMaxAge(
+                SessionResourceConstants.SESSION_EXPIRE_TIME_IN_SECONDs);
         response.addCookie(cookie);
         return newSession;
     }

@@ -21,13 +21,14 @@ package cn.edu.seu.herald.session;
  */
 public interface SessionResourceConstants {
 
-    String SERVICE_BASE_URI = "http://127.0.0.1/sessionservice";
     String SESSION_COLLECTION_PATH = "/sessions";
     String SESSION_ID_PARAM_NAME = "session-id";
-    String SESSION_INSTANCE_PATH = SESSION_COLLECTION_PATH
-            + "/{" + SESSION_ID_PARAM_NAME + "}";
-    String SESSION_COLLECTION_URI = SERVICE_BASE_URI + SESSION_COLLECTION_PATH;
-    String SESSION_INSTANCE_URI = SESSION_COLLECTION_URI
-            + SESSION_INSTANCE_PATH;
-    long SESSION_EXPIRE_TIME_IN_SECONDs = 60 * 30;
+    String SESSION_INSTANCE_PATH = SESSION_COLLECTION_PATH +
+            "/{" + SESSION_ID_PARAM_NAME + "}";
+    String DEFAULT_SERVICE_BASE_URI = "http://127.0.0.1/sessionservice";
+    String DEFAULT_SESSION_COLLECTION_URI = DEFAULT_SERVICE_BASE_URI +
+            SESSION_COLLECTION_PATH;
+    String DEFAULT_SESSION_INSTANCE_URI = DEFAULT_SERVICE_BASE_URI +
+            SESSION_INSTANCE_PATH;
+    int SESSION_EXPIRE_TIME_IN_SECONDs = 60 * 30;
 }

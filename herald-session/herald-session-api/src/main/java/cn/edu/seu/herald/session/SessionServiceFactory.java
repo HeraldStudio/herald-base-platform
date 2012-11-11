@@ -25,7 +25,6 @@ public class SessionServiceFactory {
 
     private static SessionServiceFactory factoryInstance;
     private ClientResourceFactory clientResourceFactory;
-    private DomRepresentationParser parse;
 
     public static SessionServiceFactory getInstance() {
         if (factoryInstance == null) {
@@ -36,14 +35,12 @@ public class SessionServiceFactory {
 
     protected SessionServiceFactory() {
         clientResourceFactory = new ClientResourceFactory(
-                SessionResourceConstants.SESSION_COLLECTION_URI);
-        parse = new DomRepresentationParser();
+                SessionResourceConstants.DEFAULT_SERVICE_BASE_URI);
     }
 
     public SessionService getSessionService() {
         SessionService sessionCacheService =
                 new SessionService(clientResourceFactory);
-        sessionCacheService.setDomRepresentationParser(parse);
         return sessionCacheService;
     }
 }

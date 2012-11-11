@@ -4,14 +4,13 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>cn.edu.seu.herald</groupId>
-    <artifactId>herald-session</artifactId>
+    <artifactId>herald-sso</artifactId>
     <version>1.0-ALPHA2</version>
   </parent>
   <groupId>cn.edu.seu.herald</groupId>
-  <artifactId>herald-session-api-example</artifactId>
+  <artifactId>herald-sso-client</artifactId>
   <version>1.0-ALPHA2</version>
-  <name>Herald Session Service API Example</name>
-  <url>http://maven.apache.org</url>
+  <name>Herald Single-Sign-On Client</name>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
@@ -23,9 +22,10 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>herald-session-api</artifactId>
-      <version>${project.version}</version>
+      <groupId>javax</groupId>
+      <artifactId>javaee-web-api</artifactId>
+      <version>6.0</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 </project>

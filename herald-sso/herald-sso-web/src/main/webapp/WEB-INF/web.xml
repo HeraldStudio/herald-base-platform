@@ -3,6 +3,13 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
+    <context-param>
+        <param-name>cn.edu.seu.herald.session.sessionServiceUrl</param-name>
+        <param-value>http://localhost/sessionservice</param-value>
+    </context-param>
+    <listener>
+        <listener-class>cn.edu.seu.herald.sso.web.SingleSignOnContextListener</listener-class>
+    </listener>
     <filter>
         <filter-name>characterEncodingFilter</filter-name>
         <filter-class>cn.edu.seu.herald.sso.web.CharacterEncodingFilter</filter-class>

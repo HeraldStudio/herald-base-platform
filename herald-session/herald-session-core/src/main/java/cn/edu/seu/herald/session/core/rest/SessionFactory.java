@@ -44,7 +44,7 @@ public class SessionFactory {
         Session newSession = new Session(newSessionId, currentTime);
 
         StringBuilder uriBuilder = new StringBuilder();
-        uriBuilder.append(SessionResourceConstants.SESSION_COLLECTION_URI)
+        uriBuilder.append(SessionResourceConstants.DEFAULT_SESSION_COLLECTION_URI)
                 .append("/")
                 .append(newSessionId);
         newSession.setUri(uriBuilder.toString());

@@ -21,6 +21,8 @@ import cn.edu.seu.herald.session.exception.ServerInternalErrorException;
 import cn.edu.seu.herald.session.exception.SessionAccessException;
 import cn.edu.seu.herald.session.exception.UnknownStatusException;
 import cn.edu.seu.herald.session.util.DomRepresentationParser;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.restlet.data.Status;
 import org.restlet.ext.xml.DomRepresentation;
 import org.restlet.representation.Representation;
@@ -32,6 +34,8 @@ import org.restlet.resource.ClientResource;
  */
 public class SessionService implements SessionResourceConstants {
 
+    private static final Logger logger = Logger.getLogger(
+            SessionService.class.getName());
     private ClientResourceFactory clientResourceFactory;
     private DomRepresentationParser parser;
 
@@ -48,20 +52,14 @@ public class SessionService implements SessionResourceConstants {
         return new UnknownStatusException();
     }
 
-    public SessionService() {
-    }
-
     public SessionService(ClientResourceFactory clientResourceFactory) {
         this.clientResourceFactory = clientResourceFactory;
+        this.parser = new DomRepresentationParser();
     }
 
     public void setClientResourceFactory(
             ClientResourceFactory clientResourceFactory) {
         this.clientResourceFactory = clientResourceFactory;
-    }
-
-    public void setDomRepresentationParser(DomRepresentationParser parser) {
-        this.parser = parser;
     }
 
     /**
@@ -83,6 +81,7 @@ public class SessionService implements SessionResourceConstants {
             }
             throw getStatusException(responseStatus);
         } catch (Exception ex) {
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
             throw new SessionAccessException(ex);
         }
     }
@@ -110,6 +109,7 @@ public class SessionService implements SessionResourceConstants {
             }
             throw getStatusException(responseStatus);
         } catch (Exception ex) {
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
             throw new SessionAccessException(ex);
         }
     }
@@ -134,6 +134,7 @@ public class SessionService implements SessionResourceConstants {
             }
             throw getStatusException(responseStatus);
         } catch (Exception ex) {
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
             throw new SessionAccessException(ex);
         }
     }
@@ -150,6 +151,7 @@ public class SessionService implements SessionResourceConstants {
             }
             throw getStatusException(responseStatus);
         } catch (Exception ex) {
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
             throw new SessionAccessException(ex);
         }
     }
@@ -174,6 +176,7 @@ public class SessionService implements SessionResourceConstants {
             }
             throw getStatusException(responseStatus);
         } catch (Exception ex) {
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
             throw new SessionAccessException(ex);
         }
     }
