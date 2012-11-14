@@ -25,16 +25,15 @@ import java.util.UUID;
  */
 public class SessionFactory {
 
-    private static SessionFactory factory;
+    private String sessionServiceUrl;
 
-    public static SessionFactory getInstance() {
-        if (factory == null) {
-            factory = new SessionFactory();
-        }
-        return factory;
+    public SessionFactory() {
+        this.sessionServiceUrl =
+                SessionResourceConstants.DEFAULT_SERVICE_BASE_URI;
     }
 
-    protected SessionFactory() {
+    public SessionFactory(String sessionServiceUrl) {
+        this.sessionServiceUrl = sessionServiceUrl;
     }
 
     public Session newSession() {
@@ -44,7 +43,8 @@ public class SessionFactory {
         Session newSession = new Session(newSessionId, currentTime);
 
         StringBuilder uriBuilder = new StringBuilder();
-        uriBuilder.append(SessionResourceConstants.DEFAULT_SESSION_COLLECTION_URI)
+        uriBuilder.append(sessionServiceUrl)
+                .append(SessionResourceConstants.SESSION_COLLECTION_PATH)
                 .append("/")
                 .append(newSessionId);
         newSession.setUri(uriBuilder.toString());

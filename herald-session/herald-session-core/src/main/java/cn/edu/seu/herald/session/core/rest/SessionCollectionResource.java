@@ -45,7 +45,7 @@ public class SessionCollectionResource extends ServerResource
                 SESSION_CONFIG_PATH);
         sessionCacheAccess = (SessionCacheAccess) context
                 .getBean(SESSION_CACHE_ACCESS_BEAN_NAME);
-        sessionFactory = SessionFactory.getInstance();
+        sessionFactory = new SessionFactory();
     }
 
     @Post("xml:xml")

@@ -35,7 +35,7 @@ public class StudentUserAccountServiceImpl
     private static final Logger logger = Logger.getLogger(
             StudentUserAccountServiceImpl.class.getName());
 
-    private static final String COFIG_LOCATION =
+    private static final String CONFIG_LOCATION =
             "/config/com.wiscom.is.client.properties";
 
     private IdentityFactory factory;
@@ -44,7 +44,7 @@ public class StudentUserAccountServiceImpl
         logger.log(Level.INFO, "constructing IdentityFactory");
         try {
             String userHome = System.getProperty("user.home");
-            factory = IdentityFactory.createFactory(userHome + COFIG_LOCATION);
+            factory = IdentityFactory.createFactory(userHome + CONFIG_LOCATION);
         logger.log(Level.INFO, "IdentityFactory constructed");
         } catch (Exception ex) {
             logger.log(Level.SEVERE, ex.getMessage(), ex);

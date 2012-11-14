@@ -2,14 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-    <artifactId>herald-session</artifactId>
-    <groupId>cn.edu.seu.herald</groupId>
-    <version>1.0-ALPHA2</version>
-  </parent>
+        <artifactId>herald-session</artifactId>
+        <groupId>cn.edu.seu.herald</groupId>
+        <version>1.0-ALPHA3</version>
+    </parent>
 
     <groupId>cn.edu.seu.herald</groupId>
     <artifactId>herald-session-app</artifactId>
-    <version>1.0-ALPHA2</version>
+    <version>1.0-ALPHA3</version>
     <packaging>war</packaging>
 
     <name>Herald Session Service Application Layer</name>
@@ -29,15 +29,15 @@
 
     <dependencies>
         <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>herald-session-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.restlet.jee</groupId>
             <artifactId>org.restlet</artifactId>
             <version>2.0.0</version>
             <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>herald-session-core</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.restlet.jee</groupId>

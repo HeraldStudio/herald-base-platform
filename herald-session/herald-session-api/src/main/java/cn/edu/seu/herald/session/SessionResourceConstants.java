@@ -25,7 +25,7 @@ public interface SessionResourceConstants {
     String SESSION_ID_PARAM_NAME = "session-id";
     String SESSION_INSTANCE_PATH = SESSION_COLLECTION_PATH +
             "/{" + SESSION_ID_PARAM_NAME + "}";
-    String DEFAULT_SERVICE_BASE_URI = "http://127.0.0.1/sessionservice";
+    String DEFAULT_SERVICE_BASE_URI = "http://localhost:8080/sessionservice";
     String DEFAULT_SESSION_COLLECTION_URI = DEFAULT_SERVICE_BASE_URI +
             SESSION_COLLECTION_PATH;
     String DEFAULT_SESSION_INSTANCE_URI = DEFAULT_SERVICE_BASE_URI +
