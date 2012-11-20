@@ -4,14 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>cn.edu.seu.herald</groupId>
-        <artifactId>herald-session</artifactId>
-        <version>1.0-ALPHA3</version>
+        <artifactId>herald-task-queue</artifactId>
+        <version>1.0-SNAPSHOT</version>
     </parent>
     <groupId>cn.edu.seu.herald</groupId>
-    <artifactId>herald-session-jee-api</artifactId>
-    <version>1.0-ALPHA3</version>
-    <name>Herald Session Service JEE API</name>
-    <url>http://maven.apache.org</url>
+    <artifactId>herald-task-queue-core</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>Herald Task Queue Service Core Layer</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -23,15 +22,14 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>herald-session-api</artifactId>
-            <version>${project.version}</version>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>2.9.3</version>
         </dependency>
         <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-web-api</artifactId>
-            <version>6.0</version>
-            <scope>provided</scope>
+            <groupId>rhino</groupId>
+            <artifactId>js</artifactId>
+            <version>1.7R2</version>
         </dependency>
     </dependencies>
 </project>

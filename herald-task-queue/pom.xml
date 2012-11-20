@@ -7,16 +7,11 @@
         <version>1.0-ALPHA3</version>
     </parent>
     <groupId>cn.edu.seu.herald</groupId>
-    <artifactId>herald-sso</artifactId>
-    <version>1.0-ALPHA3</version>
+    <artifactId>herald-task-queue</artifactId>
+    <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>Herald Single-Sign-On Service</name>
-
+    <name>Herald Task Queue Service</name>
     <modules>
-        <module>herald-sso-api</module>
-        <module>herald-sso-client</module>
-        <module>herald-sso-core</module>
-        <module>herald-sso-example</module>
-        <module>herald-sso-web</module>
+        <module>herald-task-queue-core</module>
     </modules>
 </project>

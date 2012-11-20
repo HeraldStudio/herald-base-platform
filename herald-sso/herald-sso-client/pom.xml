@@ -1,31 +1,31 @@
 <?xml version="1.0"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>cn.edu.seu.herald</groupId>
+        <artifactId>herald-sso</artifactId>
+        <version>1.0-ALPHA3</version>
+    </parent>
     <groupId>cn.edu.seu.herald</groupId>
-    <artifactId>herald-sso</artifactId>
+    <artifactId>herald-sso-client</artifactId>
     <version>1.0-ALPHA3</version>
-  </parent>
-  <groupId>cn.edu.seu.herald</groupId>
-  <artifactId>herald-sso-client</artifactId>
-  <version>1.0-ALPHA3</version>
-  <name>Herald Single-Sign-On Client</name>
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>javax</groupId>
-      <artifactId>javaee-web-api</artifactId>
-      <version>6.0</version>
-      <scope>provided</scope>
-    </dependency>
-  </dependencies>
+    <name>Herald Single-Sign-On Client</name>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+            <version>6.0</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 </project>

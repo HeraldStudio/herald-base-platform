@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>cn.edu.seu.herald</groupId>
-  <artifactId>herald-base-platform</artifactId>
-  <version>1.0-ALPHA3</version>
-  <packaging>pom</packaging>
-  <name>Herald Base Platform</name>
-  <licenses>
-      <license>
-          <name>Apache License, Version 2.0</name>
-          <url>http://www.apache.org/licenses/LICENSE-2.0</url>
-      </license>
-  </licenses>
-  <organization>
-      <name>Herald Studio, Southeast University</name>
-      <url>http://herald.seu.edu.cn</url>
-  </organization>
-  <properties>
-      <netbeans.hint.license>apache20</netbeans.hint.license>
-  </properties>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>cn.edu.seu.herald</groupId>
+    <artifactId>herald-base-platform</artifactId>
+    <version>1.0-ALPHA3</version>
+    <packaging>pom</packaging>
+    <name>Herald Base Platform</name>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
+    <organization>
+        <name>Herald Studio, Southeast University</name>
+        <url>http://herald.seu.edu.cn</url>
+    </organization>
+    <properties>
+        <netbeans.hint.license>apache20</netbeans.hint.license>
+    </properties>
 
-  <modules>
-    <module>herald-session</module>
-    <module>herald-sso</module>
+    <modules>
+        <module>herald-session</module>
+        <module>herald-sso</module>
+    <module>herald-task-queue</module>
   </modules>
 
-  <scm>
-      <tag>HEAD</tag>
-      <connection>scm:git:https://github.com/HeraldStudio/herald-base-platform.git</connection>
-  </scm>
+    <scm>
+        <tag>HEAD</tag>
+        <connection>scm:git:https://github.com/HeraldStudio/herald-base-platform.git</connection>
+    </scm>
 </project>

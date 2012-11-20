@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
-    <system systemId="file:/D:/workspace/HeraldBasePlatform/herald-session/herald-session-api/src/main/resources/cn/edu/seu/herald/herald-session.xsd" uri="src/main/resources/jaxb/session/herald-session.xsd"/>
-</catalog>
