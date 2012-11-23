@@ -23,4 +23,9 @@
         <tag>HEAD</tag>
         <connection>scm:git:https://github.com/HeraldStudio/herald-base-platform.git</connection>
     </scm>
+    <modules>
+        <module>herald-session</module>
+        <module>herald-sso</module>
+        <module>herald-task-queue</module>
+    </modules>
 </project>
