@@ -1,3 +1,9 @@
 [submodule "herald-session"]
 	path = herald-session
 	url = git://github.com/HeraldStudio/herald-session-service.git
+[submodule "herald-sso"]
+	path = herald-sso
+	url = https://github.com/HeraldStudio/herald-single-sign-on-service.git
+[submodule "herald-task-queue"]
+	path = herald-task-queue
+	url = https://github.com/HeraldStudio/herald-task-queue-service.git
