@@ -1,0 +1,3 @@
+[submodule "herald-session"]
+	path = herald-session
+	url = git://github.com/HeraldStudio/herald-session-service.git
