@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Context antiJARLocking="true" path="/sessionservice">
-    <Valve className="org.apache.catalina.valves.RemoteAddrValve" allow="127.0.0.1" />
-</Context>

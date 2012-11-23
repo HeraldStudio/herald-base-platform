@@ -19,13 +19,6 @@
     <properties>
         <netbeans.hint.license>apache20</netbeans.hint.license>
     </properties>
-
-    <modules>
-        <module>herald-session</module>
-        <module>herald-sso</module>
-    <module>herald-task-queue</module>
-  </modules>
-
     <scm>
         <tag>HEAD</tag>
         <connection>scm:git:https://github.com/HeraldStudio/herald-base-platform.git</connection>
