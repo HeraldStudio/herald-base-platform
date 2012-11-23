@@ -13,12 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.edu.seu.herald.taskqueue;
-
 /**
- *
  * @author rAy
+ * this javascript is to initialize the task queue script application context,
+ * and declare the host objects
  */
-public class NewClass {
-
-}
+var mongo = (function() {
+    var contextClzPath = "cn/edu/seu/herald/taskqueue/applicationContext.xml";
+    var appContext = new Packages.org.springframework.context.support.
+        ClassPathXmlApplicationContext(contextClzPath);
+    return appContext.getBean("mongo");
+}());

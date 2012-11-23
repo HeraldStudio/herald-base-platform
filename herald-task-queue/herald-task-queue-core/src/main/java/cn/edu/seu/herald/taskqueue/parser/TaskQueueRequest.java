@@ -13,9 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package cn.edu.seu.herald.taskqueue.parser;
+
 /**
+ *
  * @author rAy
- * this javascript is to initialize the task queue script context,
- * and declare the host objects
  */
-var mongodb;
+public interface TaskQueueRequest {
+
+    Object getProperty(String name);
+}
