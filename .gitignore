@@ -4,15 +4,3 @@
 *.jar
 *.war
 *.ear
-/herald-session/herald-session-app/target/
-/herald-session/herald-session-jee-api/target/
-/herald-sso/herald-sso-api/target/
-/herald-sso/herald-sso-web/target/
-/herald-sso/herald-sso-core/target/
-/herald-session/herald-session-example/target/
-/herald-session/herald-session-jee-api-example/target/
-/herald-session/herald-session-api/target/
-/herald-session/herald-session-core/target/
-/herald-sso/herald-sso-example/target/
-/herald-sso/herald-sso-client/target/
-/herald-task-queue/herald-task-queue-core/target/
